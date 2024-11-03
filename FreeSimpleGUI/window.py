@@ -608,7 +608,7 @@ class Window:
         it as a parameter to the Window call is better.
 
         :param rows: A list of a list of elements
-        :type rows:  List[List[Elements]]
+        :type rows:  List[List[Elements]]..
         """
         for row in rows:
             try:
@@ -618,7 +618,7 @@ class Window:
                     'Error Creating Window Layout',
                     'Error creating Window layout',
                     'Your row is not an iterable (e.g. a list)',
-                    f'Instead of a list, the type found was {type(row)}',
+                    'Instead of a list, the type found was {}'.format(type(row)),
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
@@ -1420,15 +1420,15 @@ class Window:
                 if element.Key is not None:
                     if element.Key in key_dict.keys():
                         if element.Type == ELEM_TYPE_BUTTON and FreeSimpleGUI.WARN_DUPLICATE_BUTTON_KEY_ERRORS:  # for Buttons see if should complain
-                            warnings.warn(f'*** Duplicate key found in your layout {element.Key} ***', UserWarning)
-                            warnings.warn(f'*** Replaced new key with {str(element.Key) + str(self.UniqueKeyCounter)} ***')
+                            warnings.warn('*** Duplicate key found in your layout {} ***'.format(element.Key), UserWarning)
+                            warnings.warn('*** Replaced new key with {} ***'.format(str(element.Key) + str(self.UniqueKeyCounter)))
                             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
                                 _error_popup_with_traceback(
                                     'Duplicate key found in your layout',
-                                    f'Dupliate key: {element.Key}',
-                                    f'Is being replaced with: {str(element.Key) + str(self.UniqueKeyCounter)}',
+                                    'Dupliate key: {}'.format(element.Key),
+                                    'Is being replaced with: {}'.format(str(element.Key) + str(self.UniqueKeyCounter)),
                                     'The line of code above shows you which layout, but does not tell you exactly where the element was defined',
-                                    f'The element type is {element.Type}',
+                                    'The element type is {}'.format(element.Type),
                                 )
                         element.Key = str(element.Key) + str(self.UniqueKeyCounter)
                         self.UniqueKeyCounter += 1
@@ -1673,19 +1673,19 @@ class Window:
 
     def _OnMotion(self, event):
 
-        self.TKroot.geometry(f'+{event.x_root - self._mouse_offset_x}+{event.y_root - self._mouse_offset_y}')
+        self.TKroot.geometry('+{}+{}'.format(event.x_root - self._mouse_offset_x,event.y_root - self._mouse_offset_y))
         # ------ Move All Windows code ------
         try:
             if Window._move_all_windows:
                 for win in Window._active_windows:
                     if win == self:
                         continue
-                    win.TKroot.geometry(f'+{event.x_root - win._mouse_offset_x}+{event.y_root - win._mouse_offset_y}')
+                    win.TKroot.geometry('+{}+{}'.format(event.x_root - win._mouse_offset_x,event.y_root - win._mouse_offset_y))
         except Exception as e:
             print('on motion error', e)
 
     def _focus_callback(self, event):
-        print(f'Focus event = {event} window = {self.Title}')
+        print('Focus event = {} window = {}'.format(event, self.Title))
 
     def _config_callback(self, event):
         """

@@ -78,9 +78,9 @@ def _error_popup_with_code(title, filename, line_num, *args, emoji=None):
     lines = []
     for msg in args:
         if isinstance(msg, Exception):
-            lines += [[f'Additional Exception info pased in by PySimpleGUI or user: Error type is: {type(msg).__name__}']]
-            lines += [[f'In file {__file__} Line number {msg.__traceback__.tb_lineno}']]
-            lines += [[f'{msg}']]
+            lines += [['Additional Exception info pased in by PySimpleGUI or user: Error type is: {}'.format(type(msg).__name__)]]
+            lines += [['In file {} Line number {}'.format(__file__,msg.__traceback__.tb_lineno)]]
+            lines += [[msg]]
         else:
             lines += [str(msg).split('\n')]
     max_line_len = 0

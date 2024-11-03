@@ -16485,7 +16485,7 @@ test = main
 sdk_help = main_sdk_help
 
 
-# ------------------------ Set the "Official PySimpleGUI Theme Colors" ------------------------
+# ------------------------ Set the "Official PySimpleGUI Theme Colors." ------------------------
 
 
 theme(theme_global())
