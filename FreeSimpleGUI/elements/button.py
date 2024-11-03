@@ -740,7 +740,7 @@ class ButtonMenu(Element):
             elif isinstance(image_source, bytes):
                 image_data = image_source
             else:
-                warnings.warn(f'ButtonMenu element - image_source is not a valid type: {type(image_source)}', UserWarning)
+                warnings.warn('ButtonMenu element - image_source is not a valid type: {}'.format(type(image_source)), UserWarning)
 
         self.ImageFilename = image_filename
         self.ImageData = image_data
@@ -856,7 +856,7 @@ class ButtonMenu(Element):
                     filename = image_source
                 else:
                     warnings.warn(
-                        f'ButtonMenu element - image_source is not a valid type: {type(image_source)}',
+                        'ButtonMenu element - image_source is not a valid type: {}'.format(type(image_source)),
                         UserWarning,
                     )
             image = None

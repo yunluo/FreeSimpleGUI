@@ -536,7 +536,7 @@ class Graph(Element):
         try:
             self._TKCanvas2.delete(id)
         except:
-            print(f'DeleteFigure - bad ID {id}')
+            print('DeleteFigure - bad ID {}'.format(id))
         try:
             del self.Images[id]  # in case was an image. If wasn't an image, then will get exception
         except:

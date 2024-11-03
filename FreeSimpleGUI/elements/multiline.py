@@ -378,7 +378,7 @@ class Multiline(Element):
         t=None,
         b=None,
         c=None,
-        autoscroll=True,
+        autoscroll=True
     ):
         """
         Print like Python normally prints except route the output to a multiline element and also add colors if desired

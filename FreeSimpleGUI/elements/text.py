@@ -279,7 +279,7 @@ class Text(Element):
         autoscroll=None,
         justification=None,
         font=None,
-        append=None,
+        append=None
     ):
         """
         Print like Python normally prints except route the output to a multiline element and also add colors if desired
@@ -336,7 +336,7 @@ class Text(Element):
         b=None,
         c=None,
         autoscroll=True,
-        append=True,
+        append=True
     ):
         """
         Print like Python normally prints except route the output to a multiline element and also add colors if desired

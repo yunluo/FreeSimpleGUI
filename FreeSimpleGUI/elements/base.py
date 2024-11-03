@@ -308,7 +308,7 @@ class Element:
         """
         if self.Type == ELEM_TYPE_TAB_GROUP:
             try:
-                index = self.Widget.index(f'@{event.x},{event.y}')
+                index = self.Widget.index('@{},{}'.format(event.x,event.y))
                 tab = self.Widget.tab(index, 'text')
                 key = self.find_key_from_tab_name(tab)
                 tab_element = self.ParentForm.key_dict[key]
@@ -341,7 +341,7 @@ class Element:
         else:
             winx, winy = self._popup_menu_location
         # self.ParentForm.TKroot.update()
-        self.ParentForm.TKroot.tk.call('wm', 'geometry', menu, f'+{winx}+{winy}')
+        self.ParentForm.TKroot.tk.call('wm', 'geometry', menu, '+{}+{}'.format(winx, winy))
 
     def _MenuItemChosenCallback(self, item_chosen):  # TEXT Menu item callback
         """
@@ -828,7 +828,7 @@ class Element:
             )
             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
-                    f'Unable to complete operation on element with key {self.Key}',
+                    'Unable to complete operation on element with key {}'.format(self.Key),
                     'You cannot perform operations (such as calling update) on an Element until:',
                     ' window.read() is called or finalize=True when Window created.',
                     'Adding a "finalize=True" parameter to your Window creation will likely fix this.',

@@ -248,12 +248,12 @@ class Listbox(Element):
                     try:
                         self.TKListbox.selection_set(i, i)
                     except:
-                        warnings.warn(f'* Listbox Update selection_set failed with index {set_to_index}*')
+                        warnings.warn('* Listbox Update selection_set failed with index {}*'.format(set_to_index))
             else:
                 try:
                     self.TKListbox.selection_set(set_to_index, set_to_index)
                 except:
-                    warnings.warn(f'* Listbox Update selection_set failed with index {set_to_index}*')
+                    warnings.warn('* Listbox Update selection_set failed with index {}*'.format(set_to_index))
         if visible is False:
             self._pack_forget_save_settings(self.element_frame)
         elif visible is True:

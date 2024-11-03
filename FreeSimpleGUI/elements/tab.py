@@ -102,7 +102,7 @@ class Tab(Element):
             elif isinstance(image_source, str):
                 filename = image_source
             else:
-                warnings.warn(f'Image element - source is not a valid type: {type(image_source)}', UserWarning)
+                warnings.warn('Image element - source is not a valid type: {}'.format(type(image_source)), UserWarning)
 
         self.Filename = filename
         self.Data = data
@@ -220,7 +220,7 @@ class Tab(Element):
                 popup_error(
                     'Error creating Tab layout',
                     'Your row is not an iterable (e.g. a list)',
-                    f'Instead of a list, the type found was {type(row)}',
+                    'Instead of a list, the type found was {}'.format(type(row)),
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
@@ -296,7 +296,7 @@ class Tab(Element):
         try:
             self.ParentNotebook.select(self.TabID)
         except Exception as e:
-            print(f'Exception Selecting Tab {e}')
+            print('Exception Selecting Tab {}'.format(e))
 
     AddRow = add_row
     Layout = layout
@@ -519,7 +519,7 @@ class TabGroup(Element):
                 popup_error(
                     'Error creating Tab layout',
                     'Your row is not an iterable (e.g. a list)',
-                    f'Instead of a list, the type found was {type(row)}',
+                    'Instead of a list, the type found was {}'.format(type(row)),
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
@@ -630,7 +630,7 @@ class TabGroup(Element):
             _error_popup_with_traceback(
                 'Your Window has an Tab Element with an IMAGE problem',
                 'The traceback will show you the Window with the problem layout',
-                f'Look in this Window\'s layout for an Image tab_element that has a key of {tab_element.Key}',
+                'Look in this Window\'s layout for an Image tab_element that has a key of {}'.format(tab_element.Key),
                 'The error occuring is:',
                 e,
             )

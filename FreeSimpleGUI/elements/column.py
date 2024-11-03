@@ -367,7 +367,7 @@ class Column(Element):
                 popup_error(
                     'Error creating Column layout',
                     'Your row is not an iterable (e.g. a list)',
-                    f'Instead of a list, the type found was {type(row)}',
+                    'Instead of a list, the type found was {}'.format(type(row)),
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',

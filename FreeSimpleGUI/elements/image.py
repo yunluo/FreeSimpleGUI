@@ -83,7 +83,7 @@ class Image(Element):
             elif isinstance(source, str):
                 filename = source
             else:
-                warnings.warn(f'Image element - source is not a valid type: {type(source)}', UserWarning)
+                warnings.warn('Image element - source is not a valid type: {}'.format(type(source)), UserWarning)
 
         self.Filename = filename
         self.Data = data
@@ -160,7 +160,7 @@ class Image(Element):
             elif isinstance(source, str):
                 filename = source
             else:
-                warnings.warn(f'Image element - source is not a valid type: {type(source)}', UserWarning)
+                warnings.warn('Image element - source is not a valid type: {}'.format(type(source)), UserWarning)
 
         image = None
         if filename is not None:
