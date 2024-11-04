@@ -23,10 +23,10 @@ class TKProgressBar:
         length=400,
         width=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_SIZE[1],
         ttk_theme=FreeSimpleGUI.DEFAULT_TTK_THEME,
-        style_name='',
+        style_name="",
         relief=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_RELIEF,
         border_width=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_BORDER_WIDTH,
-        orientation='horizontal',
+        orientation="horizontal",
         BarColor=(None, None),
         key=None,
     ):
@@ -65,7 +65,7 @@ class TKProgressBar:
 
         TKProgressBar.uniqueness_counter += 1
 
-        if orientation.lower().startswith('h'):
+        if orientation.lower().startswith("h"):
             s = ttk.Style()
             _change_ttk_theme(s, ttk_theme)
 
@@ -79,14 +79,25 @@ class TKProgressBar:
                     thickness=width,
                 )
             else:
-                s.configure(self.style_name, troughrelief=relief, borderwidth=border_width, thickness=width)
+                s.configure(
+                    self.style_name,
+                    troughrelief=relief,
+                    borderwidth=border_width,
+                    thickness=width,
+                )
 
-            self.TKProgressBarForReal = ttk.Progressbar(root, maximum=self.Max, style=self.style_name, length=length, orient=tk.HORIZONTAL, mode='determinate')
+            self.TKProgressBarForReal = ttk.Progressbar(
+                root,
+                maximum=self.Max,
+                style=self.style_name,
+                length=length,
+                orient=tk.HORIZONTAL,
+                mode="determinate",
+            )
         else:
             s = ttk.Style()
             _change_ttk_theme(s, ttk_theme)
             if BarColor != COLOR_SYSTEM_DEFAULT and BarColor[0] != COLOR_SYSTEM_DEFAULT:
-
                 s.configure(
                     self.style_name,
                     background=BarColor[0],
@@ -96,9 +107,21 @@ class TKProgressBar:
                     thickness=width,
                 )
             else:
-                s.configure(self.style_name, troughrelief=relief, borderwidth=border_width, thickness=width)
+                s.configure(
+                    self.style_name,
+                    troughrelief=relief,
+                    borderwidth=border_width,
+                    thickness=width,
+                )
 
-            self.TKProgressBarForReal = ttk.Progressbar(root, maximum=self.Max, style=self.style_name, length=length, orient=tk.VERTICAL, mode='determinate')
+            self.TKProgressBarForReal = ttk.Progressbar(
+                root,
+                maximum=self.Max,
+                style=self.style_name,
+                length=length,
+                orient=tk.VERTICAL,
+                mode="determinate",
+            )
 
     def Update(self, count=None, max=None):
         """
@@ -116,7 +139,7 @@ class TKProgressBar:
                 return False
         if count is not None:
             try:
-                self.TKProgressBarForReal['value'] = count
+                self.TKProgressBarForReal["value"] = count
             except:
                 return False
         return True
@@ -194,17 +217,25 @@ class ProgressBar(Element):
         self.TKProgressBar = None  # type: TKProgressBar
         self.Cancelled = False
         self.NotRunning = True
-        self.Orientation = orientation if orientation else FreeSimpleGUI.DEFAULT_METER_ORIENTATION
+        self.Orientation = (
+            orientation if orientation else FreeSimpleGUI.DEFAULT_METER_ORIENTATION
+        )
         self.RightClickMenu = right_click_menu
         # Progress Bar colors can be a tuple (text, background) or a string with format "bar on background" - examples "red on white" or ("red", "white")
         if bar_color is None:
             bar_color = FreeSimpleGUI.DEFAULT_PROGRESS_BAR_COLOR
         else:
-            bar_color = _simplified_dual_color_to_tuple(bar_color, default=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_COLOR)
+            bar_color = _simplified_dual_color_to_tuple(
+                bar_color, default=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_COLOR
+            )
 
         self.BarColor = bar_color  # should be a tuple at this point
         self.BarStyle = style if style else FreeSimpleGUI.DEFAULT_TTK_THEME
-        self.BorderWidth = border_width if border_width else FreeSimpleGUI.DEFAULT_PROGRESS_BAR_BORDER_WIDTH
+        self.BorderWidth = (
+            border_width
+            if border_width
+            else FreeSimpleGUI.DEFAULT_PROGRESS_BAR_BORDER_WIDTH
+        )
         self.Relief = relief if relief else FreeSimpleGUI.DEFAULT_PROGRESS_BAR_RELIEF
         self.BarExpired = False
         key = key if key is not None else k
@@ -269,11 +300,15 @@ class ProgressBar(Element):
         :return:              Returns True if update was OK.  False means something wrong with window or it was closed
         :rtype:               (bool)
         """
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return False
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in ProgressBar.update - The window was closed')
+            _error_popup_with_traceback(
+                "Error in ProgressBar.update - The window was closed"
+            )
             return
 
         if self.ParentForm.TKrootDestroyed:
@@ -287,10 +322,14 @@ class ProgressBar(Element):
         if visible is not None:
             self._visible = visible
         if bar_color is not None:
-            bar_color = _simplified_dual_color_to_tuple(bar_color, default=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_COLOR)
+            bar_color = _simplified_dual_color_to_tuple(
+                bar_color, default=FreeSimpleGUI.DEFAULT_PROGRESS_BAR_COLOR
+            )
             self.BarColor = bar_color
             style = ttk.Style()
-            style.configure(self.ttk_style_name, background=bar_color[0], troughcolor=bar_color[1])
+            style.configure(
+                self.ttk_style_name, background=bar_color[0], troughcolor=bar_color[1]
+            )
         if current_count is not None:
             self.TKProgressBar.Update(current_count, max=max)
 

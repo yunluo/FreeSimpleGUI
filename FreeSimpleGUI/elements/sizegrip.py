@@ -27,7 +27,11 @@ class Sizegrip(Element):
         :type k:      str | int | tuple | object
         """
 
-        bg = background_color if background_color is not None else theme_background_color()
+        bg = (
+            background_color
+            if background_color is not None
+            else theme_background_color()
+        )
         pad = pad if pad is not None else p
         key = key if key is not None else k
 

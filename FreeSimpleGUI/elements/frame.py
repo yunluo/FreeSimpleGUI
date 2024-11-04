@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import tkinter as tk
 import warnings
 
 import FreeSimpleGUI
@@ -39,7 +38,7 @@ class Frame(Element):
         expand_y=False,
         grab=None,
         visible=True,
-        element_justification='left',
+        element_justification="left",
         vertical_alignment=None,
         metadata=None,
     ):
@@ -105,7 +104,11 @@ class Frame(Element):
         self.Relief = relief
         self.TitleLocation = title_location
         self.BorderWidth = border_width
-        self.BackgroundColor = background_color if background_color is not None else FreeSimpleGUI.DEFAULT_BACKGROUND_COLOR
+        self.BackgroundColor = (
+            background_color
+            if background_color is not None
+            else FreeSimpleGUI.DEFAULT_BACKGROUND_COLOR
+        )
         self.RightClickMenu = right_click_menu
         self.ContainerElemementNumber = Window._GetAContainerNumber()
         self.ElementJustification = element_justification
@@ -144,43 +147,45 @@ class Frame(Element):
         CurrentRowNumber = NumRows  # this row's number
         CurrentRow = []  # start with a blank row and build up
         # -------------------------  Add the elements to a row  ------------------------- #
-        for i, element in enumerate(args):  # Loop through list of elements and add them to the row
+        for i, element in enumerate(
+            args
+        ):  # Loop through list of elements and add them to the row
             if type(element) is list:
                 popup_error(
-                    'Error creating Frame layout',
-                    'Layout has a LIST instead of an ELEMENT',
-                    'This sometimes means you have a badly placed ]',
-                    'The offensive list is:',
+                    "Error creating Frame layout",
+                    "Layout has a LIST instead of an ELEMENT",
+                    "This sometimes means you have a badly placed ]",
+                    "The offensive list is:",
                     element,
-                    'This list will be stripped from your layout',
+                    "This list will be stripped from your layout",
                     keep_on_top=True,
                 )
                 continue
             elif callable(element) and not isinstance(element, Element):
                 popup_error(
-                    'Error creating Frame layout',
-                    'Layout has a FUNCTION instead of an ELEMENT',
-                    'This likely means you are missing () from your layout',
-                    'The offensive list is:',
+                    "Error creating Frame layout",
+                    "Layout has a FUNCTION instead of an ELEMENT",
+                    "This likely means you are missing () from your layout",
+                    "The offensive list is:",
                     element,
-                    'This item will be stripped from your layout',
+                    "This item will be stripped from your layout",
                     keep_on_top=True,
                 )
                 continue
             if element.ParentContainer is not None:
                 warnings.warn(
-                    '*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***',
+                    "*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***",
                     UserWarning,
                 )
                 _error_popup_with_traceback(
-                    'Error creating Frame layout',
-                    'The layout specified has already been used',
+                    "Error creating Frame layout",
+                    "The layout specified has already been used",
                     'You MUST start witha "clean", unused layout every time you create a window',
-                    'The offensive Element = ',
+                    "The offensive Element = ",
                     element,
-                    'and has a key = ',
+                    "and has a key = ",
                     element.Key,
-                    'This item will be stripped from your layout',
+                    "This item will be stripped from your layout",
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
                 )
                 continue
@@ -207,12 +212,12 @@ class Frame(Element):
                 iter(row)
             except TypeError:
                 popup_error(
-                    'Error creating Frame layout',
-                    'Your row is not an iterable (e.g. a list)',
-                    'Instead of a list, the type found was {}'.format(type(row)),
-                    'The offensive row = ',
+                    "Error creating Frame layout",
+                    "Your row is not an iterable (e.g. a list)",
+                    "Instead of a list, the type found was {}".format(type(row)),
+                    "The offensive row = ",
                     row,
-                    'This item will be stripped from your layout',
+                    "This item will be stripped from your layout",
                     keep_on_top=True,
                     image=_random_error_emoji(),
                 )
@@ -250,11 +255,13 @@ class Frame(Element):
         :param visible: control visibility of element
         :type visible:  (bool)
         """
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Frame.update - The window was closed')
+            _error_popup_with_traceback("Error in Frame.update - The window was closed")
             return
 
         if visible is False:

@@ -11,10 +11,6 @@ import threading
 import tkinter
 import tkinter as tk
 import warnings
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Tuple
 
 import FreeSimpleGUI
 from FreeSimpleGUI import _BuildResults
@@ -102,7 +98,9 @@ class Window:
     _timeout_key = None
     _TKAfterID = None  # timer that is used to run reads with timeouts
     _window_running_mainloop = None  # The window that is running the mainloop
-    _container_element_counter = 0  # used to get a number of Container Elements (Frame, Column, Tab)
+    _container_element_counter = (
+        0  # used to get a number of Container Elements (Frame, Column, Tab)
+    )
     _read_call_from_debugger = False
     _timeout_0_counter = 0  # when timeout=0 then go through each window one at a time
     _counter_for_ttk_widgets = 0
@@ -115,7 +113,7 @@ class Window:
     _original_stderr = None
     _watermark = None
     _watermark_temp_forced = False
-    _watermark_user_text = ''
+    _watermark_user_text = ""
 
     def __init__(
         self,
@@ -160,7 +158,7 @@ class Window:
         right_click_menu_font=None,
         right_click_menu_tearoff=False,
         finalize=False,
-        element_justification='left',
+        element_justification="left",
         ttk_theme=None,
         use_ttk_buttons=None,
         modal=False,
@@ -310,19 +308,42 @@ class Window:
         """
 
         self._metadata = None  # type: Any
-        self.AutoSizeText = auto_size_text if auto_size_text is not None else FreeSimpleGUI.DEFAULT_AUTOSIZE_TEXT
-        self.AutoSizeButtons = auto_size_buttons if auto_size_buttons is not None else FreeSimpleGUI.DEFAULT_AUTOSIZE_BUTTONS
+        self.AutoSizeText = (
+            auto_size_text
+            if auto_size_text is not None
+            else FreeSimpleGUI.DEFAULT_AUTOSIZE_TEXT
+        )
+        self.AutoSizeButtons = (
+            auto_size_buttons
+            if auto_size_buttons is not None
+            else FreeSimpleGUI.DEFAULT_AUTOSIZE_BUTTONS
+        )
         self.Title = str(title)
         self.Rows = []  # a list of ELEMENTS for this row
-        self.DefaultElementSize = default_element_size if default_element_size is not None else FreeSimpleGUI.DEFAULT_ELEMENT_SIZE
-        self.DefaultButtonElementSize = default_button_element_size if default_button_element_size != (None, None) else FreeSimpleGUI.DEFAULT_BUTTON_ELEMENT_SIZE
-        if FreeSimpleGUI.DEFAULT_WINDOW_LOCATION != (None, None) and location == (None, None):
+        self.DefaultElementSize = (
+            default_element_size
+            if default_element_size is not None
+            else FreeSimpleGUI.DEFAULT_ELEMENT_SIZE
+        )
+        self.DefaultButtonElementSize = (
+            default_button_element_size
+            if default_button_element_size != (None, None)
+            else FreeSimpleGUI.DEFAULT_BUTTON_ELEMENT_SIZE
+        )
+        if FreeSimpleGUI.DEFAULT_WINDOW_LOCATION != (None, None) and location == (
+            None,
+            None,
+        ):
             self.Location = FreeSimpleGUI.DEFAULT_WINDOW_LOCATION
         else:
             self.Location = location
         self.RelativeLoction = relative_location
         self.ButtonColor = button_color_to_tuple(button_color)
-        self.BackgroundColor = background_color if background_color else FreeSimpleGUI.DEFAULT_BACKGROUND_COLOR
+        self.BackgroundColor = (
+            background_color
+            if background_color
+            else FreeSimpleGUI.DEFAULT_BACKGROUND_COLOR
+        )
         self.ParentWindow = None
         self.Font = font if font else FreeSimpleGUI.DEFAULT_FONT
         self.RadioDict = {}
@@ -366,7 +387,11 @@ class Window:
         self.KeepOnTop = keep_on_top
         self.ForceTopLevel = force_toplevel
         self.Resizable = resizable
-        self._AlphaChannel = alpha_channel if alpha_channel is not None else FreeSimpleGUI.DEFAULT_ALPHA_CHANNEL
+        self._AlphaChannel = (
+            alpha_channel
+            if alpha_channel is not None
+            else FreeSimpleGUI.DEFAULT_ALPHA_CHANNEL
+        )
         self.Timeout = None
         self.TimeoutKey = TIMEOUT_KEY
         self.TimerCancelled = False
@@ -384,7 +409,9 @@ class Window:
         else:
             self.ElementPadding = element_padding
         self.RightClickMenu = right_click_menu
-        self.Margins = margins if margins != (None, None) else FreeSimpleGUI.DEFAULT_MARGINS
+        self.Margins = (
+            margins if margins != (None, None) else FreeSimpleGUI.DEFAULT_MARGINS
+        )
         self.ContainerElemementNumber = Window._GetAContainerNumber()
         # The dictionary containing all elements and keys for the window
         # The keys are the keys for the elements and the values are the elements themselves.
@@ -397,7 +424,11 @@ class Window:
         self.FocusSet = False
         self.metadata = metadata
         self.TtkTheme = ttk_theme or FreeSimpleGUI.DEFAULT_TTK_THEME
-        self.UseTtkButtons = use_ttk_buttons if use_ttk_buttons is not None else FreeSimpleGUI.USE_TTK_BUTTONS
+        self.UseTtkButtons = (
+            use_ttk_buttons
+            if use_ttk_buttons is not None
+            else FreeSimpleGUI.USE_TTK_BUTTONS
+        )
         self.user_bind_dict = {}  # Used when user defines a tkinter binding using bind method - convert bind string to key modifier
         self.user_bind_event = None  # Used when user defines a tkinter binding using bind method - event data from tkinter
         self.modal = modal
@@ -413,14 +444,32 @@ class Window:
         self.config_count = 0
         self.saw_00 = False
         self.maximized = False
-        self.right_click_menu_background_color = right_click_menu_background_color if right_click_menu_background_color is not None else theme_input_background_color()
-        self.right_click_menu_text_color = right_click_menu_text_color if right_click_menu_text_color is not None else theme_input_text_color()
-        self.right_click_menu_disabled_text_color = right_click_menu_disabled_text_color if right_click_menu_disabled_text_color is not None else COLOR_SYSTEM_DEFAULT
-        self.right_click_menu_font = right_click_menu_font if right_click_menu_font is not None else self.Font
+        self.right_click_menu_background_color = (
+            right_click_menu_background_color
+            if right_click_menu_background_color is not None
+            else theme_input_background_color()
+        )
+        self.right_click_menu_text_color = (
+            right_click_menu_text_color
+            if right_click_menu_text_color is not None
+            else theme_input_text_color()
+        )
+        self.right_click_menu_disabled_text_color = (
+            right_click_menu_disabled_text_color
+            if right_click_menu_disabled_text_color is not None
+            else COLOR_SYSTEM_DEFAULT
+        )
+        self.right_click_menu_font = (
+            right_click_menu_font if right_click_menu_font is not None else self.Font
+        )
         self.right_click_menu_tearoff = right_click_menu_tearoff
         self.auto_close_timer_needs_starting = False
         self.finalize_in_progress = False
-        self.close_destroys_window = not enable_close_attempted_event if enable_close_attempted_event is not None else None
+        self.close_destroys_window = (
+            not enable_close_attempted_event
+            if enable_close_attempted_event is not None
+            else None
+        )
         self.enable_window_config_events = enable_window_config_events
         self.override_custom_titlebar = False
         self.use_custom_titlebar = use_custom_titlebar or theme_use_custom_titlebar()
@@ -428,7 +477,10 @@ class Window:
         self.titlebar_text_color = titlebar_text_color
         self.titlebar_font = titlebar_font
         self.titlebar_icon = titlebar_icon
-        self.right_click_menu_selected_colors = _simplified_dual_color_to_tuple(right_click_menu_selected_colors, (self.right_click_menu_background_color, self.right_click_menu_text_color))
+        self.right_click_menu_selected_colors = _simplified_dual_color_to_tuple(
+            right_click_menu_selected_colors,
+            (self.right_click_menu_background_color, self.right_click_menu_text_color),
+        )
         self.TKRightClickMenu = None
         self._grab_anywhere_ignore_these_list = []
         self._grab_anywhere_include_these_list = []
@@ -462,17 +514,18 @@ class Window:
             self.override_custom_titlebar = True
 
         if layout is not None and type(layout) not in (list, tuple):
-            warnings.warn('Your layout is not a list or tuple... this is not good!')
+            warnings.warn("Your layout is not a list or tuple... this is not good!")
 
         if layout is not None:
             self.Layout(layout)
             if finalize:
                 self.Finalize()
 
-        if FreeSimpleGUI.CURRENT_LOOK_AND_FEEL == 'Default':
+        if FreeSimpleGUI.CURRENT_LOOK_AND_FEEL == "Default":
             print(
-                'Window will be a boring gray. Try removing the theme call entirely\n',
-                'You will get the default theme or the one set in global settings\n' "If you seriously want this gray window and no more nagging, add  theme('DefaultNoMoreNagging')  or theme('Gray Gray Gray') for completely gray/System Defaults",
+                "Window will be a boring gray. Try removing the theme call entirely\n",
+                "You will get the default theme or the one set in global settings\n"
+                "If you seriously want this gray window and no more nagging, add  theme('DefaultNoMoreNagging')  or theme('Gray Gray Gray') for completely gray/System Defaults",
             )
 
     @classmethod
@@ -548,45 +601,46 @@ class Window:
         CurrentRowNumber = NumRows  # this row's number
         CurrentRow = []  # start with a blank row and build up
         # -------------------------  Add the elements to a row  ------------------------- #
-        for i, element in enumerate(args):  # Loop through list of elements and add them to the row
-
+        for i, element in enumerate(
+            args
+        ):  # Loop through list of elements and add them to the row
             if isinstance(element, tuple) or isinstance(element, list):
                 self.add_row(*element)
                 continue
                 _error_popup_with_traceback(
-                    'Error creating Window layout',
-                    'Layout has a LIST instead of an ELEMENT',
-                    'This sometimes means you have a badly placed ]',
-                    'The offensive list is:',
+                    "Error creating Window layout",
+                    "Layout has a LIST instead of an ELEMENT",
+                    "This sometimes means you have a badly placed ]",
+                    "The offensive list is:",
                     element,
-                    'This list will be stripped from your layout',
+                    "This list will be stripped from your layout",
                 )
                 continue
             elif callable(element) and not isinstance(element, Element):
                 _error_popup_with_traceback(
-                    'Error creating Window layout',
-                    'Layout has a FUNCTION instead of an ELEMENT',
-                    'This likely means you are missing () from your layout',
-                    'The offensive list is:',
+                    "Error creating Window layout",
+                    "Layout has a FUNCTION instead of an ELEMENT",
+                    "This likely means you are missing () from your layout",
+                    "The offensive list is:",
                     element,
-                    'This item will be stripped from your layout',
+                    "This item will be stripped from your layout",
                 )
                 continue
             if element.ParentContainer is not None:
                 warnings.warn(
-                    '*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***',
+                    "*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***",
                     UserWarning,
                 )
                 _error_popup_with_traceback(
-                    'Error detected in layout - Contains an element that has already been used.',
-                    'You have attempted to reuse an element in your layout.',
+                    "Error detected in layout - Contains an element that has already been used.",
+                    "You have attempted to reuse an element in your layout.",
                     "The layout specified has an element that's already been used.",
                     'You MUST start with a "clean", unused layout every time you create a window',
-                    'The offensive Element = ',
+                    "The offensive Element = ",
                     element,
-                    'and has a key = ',
+                    "and has a key = ",
                     element.Key,
-                    'This item will be stripped from your layout',
+                    "This item will be stripped from your layout",
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
                 )
                 continue
@@ -615,13 +669,13 @@ class Window:
                 iter(row)
             except TypeError:
                 _error_popup_with_traceback(
-                    'Error Creating Window Layout',
-                    'Error creating Window layout',
-                    'Your row is not an iterable (e.g. a list)',
-                    'Instead of a list, the type found was {}'.format(type(row)),
-                    'The offensive row = ',
+                    "Error Creating Window Layout",
+                    "Error creating Window layout",
+                    "Your row is not an iterable (e.g. a list)",
+                    "Instead of a list, the type found was {}".format(type(row)),
+                    "The offensive row = ",
                     row,
-                    'This item will be stripped from your layout',
+                    "This item will be stripped from your layout",
                 )
                 continue
             self.add_row(*row)
@@ -709,18 +763,20 @@ class Window:
         :type non_blocking:  (bool)
         """
         _error_popup_with_traceback(
-            'LayoutAndRead Depricated',
-            'Wow!  You have been using PySimpleGUI for a very long time.',
-            'The Window.LayoutAndRead call is no longer supported',
+            "LayoutAndRead Depricated",
+            "Wow!  You have been using PySimpleGUI for a very long time.",
+            "The Window.LayoutAndRead call is no longer supported",
         )
 
-        raise DeprecationWarning('LayoutAndRead is no longer supported... change your call window.Layout(layout).Read()\nor window(title, layout).Read()')
+        raise DeprecationWarning(
+            "LayoutAndRead is no longer supported... change your call window.Layout(layout).Read()\nor window(title, layout).Read()"
+        )
 
     def LayoutAndShow(self, rows):
         """
         Deprecated - do not use any longer.  Layout your window and then call Read.  Or can add a Finalize call before the Read
         """
-        raise DeprecationWarning('LayoutAndShow is no longer supported... ')
+        raise DeprecationWarning("LayoutAndShow is no longer supported... ")
 
     def _Show(self, non_blocking=False):
         """
@@ -783,11 +839,11 @@ class Window:
         if type(icon) is bytes or pngbase64 is not None:
             wicon = tkinter.PhotoImage(data=icon if icon is not None else pngbase64)
             try:
-                self.TKroot.tk.call('wm', 'iconphoto', self.TKroot._w, wicon)
+                self.TKroot.tk.call("wm", "iconphoto", self.TKroot._w, wicon)
             except:
                 wicon = tkinter.PhotoImage(data=FreeSimpleGUI.DEFAULT_BASE64_ICON)
                 try:
-                    self.TKroot.tk.call('wm', 'iconphoto', self.TKroot._w, wicon)
+                    self.TKroot.tk.call("wm", "iconphoto", self.TKroot._w, wicon)
                 except:
                     pass
             self.WindowIcon = wicon
@@ -799,12 +855,12 @@ class Window:
         except:
             try:
                 wicon = tkinter.PhotoImage(file=icon)
-                self.TKroot.tk.call('wm', 'iconphoto', self.TKroot._w, wicon)
+                self.TKroot.tk.call("wm", "iconphoto", self.TKroot._w, wicon)
             except:
                 try:
                     wicon = tkinter.PhotoImage(data=FreeSimpleGUI.DEFAULT_BASE64_ICON)
                     try:
-                        self.TKroot.tk.call('wm', 'iconphoto', self.TKroot._w, wicon)
+                        self.TKroot.tk.call("wm", "iconphoto", self.TKroot._w, wicon)
                     except:
                         pass
                 except:
@@ -901,10 +957,12 @@ class Window:
             now = datetime.datetime.now()
             hour, minute, second = now.hour, now.minute, now.second
             try:
-                date_string = calendar.datetime.datetime(year, month, day, hour, minute, second).strftime(elem.calendar_format)
+                date_string = calendar.datetime.datetime(
+                    year, month, day, hour, minute, second
+                ).strftime(elem.calendar_format)
             except Exception as e:
-                print('Bad format string in calendar chooser button', e)
-                date_string = 'Bad format string'
+                print("Bad format string in calendar chooser button", e)
+                date_string = "Bad format string"
 
             if target_element is not None and target_element != elem:
                 target_element.update(date_string)
@@ -961,21 +1019,27 @@ class Window:
                 if results[0] == FreeSimpleGUI.DEFAULT_WINDOW_SNAPSHOT_KEY:
                     self.save_window_screenshot_to_disk()
                     popup_quick_message(
-                        'Saved window screenshot to disk',
-                        background_color='#1c1e23',
-                        text_color='white',
+                        "Saved window screenshot to disk",
+                        background_color="#1c1e23",
+                        text_color="white",
                         keep_on_top=True,
-                        font='_ 30',
+                        font="_ 30",
                     )
                     continue
             # Post processing for Calendar Chooser Button
             try:
-                if results[0] == timeout_key:  # if a timeout, then not a calendar button
+                if (
+                    results[0] == timeout_key
+                ):  # if a timeout, then not a calendar button
                     break
-                elem = self.find_element(results[0], silent_on_error=True)  # get the element that caused the event
+                elem = self.find_element(
+                    results[0], silent_on_error=True
+                )  # get the element that caused the event
                 if elem.Type == ELEM_TYPE_BUTTON:
                     if elem.BType == BUTTON_TYPE_CALENDAR_CHOOSER:
-                        if self._calendar_chooser_button_clicked(elem):  # returns True if should break out
+                        if self._calendar_chooser_button_clicked(
+                            elem
+                        ):  # returns True if should break out
                             results = self.ReturnValues
                             break
                         else:
@@ -1029,16 +1093,19 @@ class Window:
             self.read_closed_window_count += 1
             if self.read_closed_window_count > 100:
                 popup_error_with_traceback(
-                    'Trying to read a closed window',
-                    'You have tried 100 times to read a closed window.',
-                    'You need to add a check for event == WIN_CLOSED',
+                    "Trying to read a closed window",
+                    "You have tried 100 times to read a closed window.",
+                    "You need to add a check for event == WIN_CLOSED",
                 )
             return None, None
         if not self.Shown:
             self._Show()
         else:
             # if already have a button waiting, the return previously built results
-            if self.LastButtonClicked is not None and not self.LastButtonClickedWasRealtime:
+            if (
+                self.LastButtonClicked is not None
+                and not self.LastButtonClickedWasRealtime
+            ):
                 results = _BuildResults(self, False, self)
                 self.LastButtonClicked = None
                 return results
@@ -1053,10 +1120,15 @@ class Window:
             if self.LastButtonClickedWasRealtime:
                 # clear the realtime flag if the element is not a button element (for example a graph element that is dragging)
                 if self.AllKeysDict.get(self.LastButtonClicked, None):
-                    if self.AllKeysDict.get(self.LastButtonClicked).Type != ELEM_TYPE_BUTTON:
+                    if (
+                        self.AllKeysDict.get(self.LastButtonClicked).Type
+                        != ELEM_TYPE_BUTTON
+                    ):
                         self.LastButtonClickedWasRealtime = False  # stops from generating events until something changes
                 else:  # it is possible for the key to not be in the dicitonary because it has a modifier. If so, then clear the realtime button flag
-                    self.LastButtonClickedWasRealtime = False  # stops from generating events until something changes
+                    self.LastButtonClickedWasRealtime = (
+                        False  # stops from generating events until something changes
+                    )
 
                 try:
                     self.TKroot.update()
@@ -1086,7 +1158,7 @@ class Window:
             try:
                 Window._root_running_mainloop.mainloop()
             except:
-                print('**** EXITING ****')
+                print("**** EXITING ****")
                 exit(-1)
             # print('Out main')
             self.CurrentlyRunningMainloop = False
@@ -1109,7 +1181,11 @@ class Window:
                 self.LastButtonClicked = None
                 return None, None
             # if form was closed with X
-            if self.LastButtonClicked is None and self.LastKeyboardEvent is None and self.ReturnValues[0] is None:
+            if (
+                self.LastButtonClicked is None
+                and self.LastKeyboardEvent is None
+                and self.ReturnValues[0] is None
+            ):
                 Window._DecrementOpenCount()
         # Determine return values
         if self.LastKeyboardEvent is not None or self.LastButtonClicked is not None:
@@ -1121,10 +1197,23 @@ class Window:
             if self._queued_thread_event_available():
                 self.ReturnValues = results = _BuildResults(self, False, self)
                 return results
-            if not self.XFound and self.Timeout != 0 and self.Timeout is not None and self.ReturnValues[0] is None:  # Special Qt case because returning for no reason so fake timeout
-                self.ReturnValues = self.TimeoutKey, self.ReturnValues[1]  # fake a timeout
-            elif not self.XFound and self.ReturnValues[0] is None:  # Return a timeout event... can happen when autoclose used on another window
-                self.ReturnValues = self.TimeoutKey, self.ReturnValues[1]  # fake a timeout
+            if (
+                not self.XFound
+                and self.Timeout != 0
+                and self.Timeout is not None
+                and self.ReturnValues[0] is None
+            ):  # Special Qt case because returning for no reason so fake timeout
+                self.ReturnValues = (
+                    self.TimeoutKey,
+                    self.ReturnValues[1],
+                )  # fake a timeout
+            elif (
+                not self.XFound and self.ReturnValues[0] is None
+            ):  # Return a timeout event... can happen when autoclose used on another window
+                self.ReturnValues = (
+                    self.TimeoutKey,
+                    self.ReturnValues[1],
+                )  # fake a timeout
             return self.ReturnValues
 
     def _ReadNonBlocking(self):
@@ -1158,8 +1247,14 @@ class Window:
         return _BuildResults(self, False, self)
 
     def _start_autoclose_timer(self):
-        duration = FreeSimpleGUI.DEFAULT_AUTOCLOSE_TIME if self.AutoCloseDuration is None else self.AutoCloseDuration
-        self.TKAfterID = self.TKroot.after(int(duration * 1000), self._AutoCloseAlarmCallback)
+        duration = (
+            FreeSimpleGUI.DEFAULT_AUTOCLOSE_TIME
+            if self.AutoCloseDuration is None
+            else self.AutoCloseDuration
+        )
+        self.TKAfterID = self.TKroot.after(
+            int(duration * 1000), self._AutoCloseAlarmCallback
+        )
 
     def finalize(self):
         """
@@ -1190,7 +1285,7 @@ class Window:
         except:
             self.TKrootDestroyed = True
             Window._DecrementOpenCount()
-            print('** Finalize failed **')
+            print("** Finalize failed **")
         return self
 
     def refresh(self):
@@ -1228,7 +1323,9 @@ class Window:
     def _find_closest_key(self, search_key):
         if not isinstance(search_key, str):
             search_key = str(search_key)
-        matches = difflib.get_close_matches(search_key, [str(k) for k in self.AllKeysDict.keys()])
+        matches = difflib.get_close_matches(
+            search_key, [str(k) for k in self.AllKeysDict.keys()]
+        )
         if not len(matches):
             return None
         for k in self.AllKeysDict.keys():
@@ -1253,14 +1350,18 @@ class Window:
         """
 
         warnings.warn(
-            'Use of FindElement is not recommended.\nEither switch to the recommended window[key] format\nor the PEP8 compliant find_element',
+            "Use of FindElement is not recommended.\nEither switch to the recommended window[key] format\nor the PEP8 compliant find_element",
             UserWarning,
         )
-        print('** Warning - FindElement should not be used to look up elements. window[key] or window.find_element are recommended. **')
+        print(
+            "** Warning - FindElement should not be used to look up elements. window[key] or window.find_element are recommended. **"
+        )
 
         return self.find_element(key, silent_on_error=silent_on_error)
 
-    def find_element(self, key, silent_on_error=False, supress_guessing=None, supress_raise=None):
+    def find_element(
+        self, key, silent_on_error=False, supress_guessing=None, supress_raise=None
+    ):
         """
         Find element object associated with the provided key.
         THIS METHOD IS NO LONGER NEEDED to be called by the user
@@ -1300,19 +1401,32 @@ class Window:
 
         key_error = False
         closest_key = None
-        supress_guessing = supress_guessing if supress_guessing is not None else FreeSimpleGUI.SUPPRESS_KEY_GUESSING
-        supress_raise = supress_raise if supress_raise is not None else FreeSimpleGUI.SUPPRESS_RAISE_KEY_ERRORS
+        supress_guessing = (
+            supress_guessing
+            if supress_guessing is not None
+            else FreeSimpleGUI.SUPPRESS_KEY_GUESSING
+        )
+        supress_raise = (
+            supress_raise
+            if supress_raise is not None
+            else FreeSimpleGUI.SUPPRESS_RAISE_KEY_ERRORS
+        )
         try:
             element = self.AllKeysDict[key]
         except KeyError:
             key_error = True
             closest_key = self._find_closest_key(key)
             if not silent_on_error:
-                print('** Error looking up your element using the key: ', key, 'The closest matching key: ', closest_key)
+                print(
+                    "** Error looking up your element using the key: ",
+                    key,
+                    "The closest matching key: ",
+                    closest_key,
+                )
                 _error_popup_with_traceback(
-                    'Key Error',
-                    'Problem finding your key ' + str(key),
-                    'Closest match = ' + str(closest_key),
+                    "Key Error",
+                    "Problem finding your key " + str(key),
+                    "Closest match = " + str(closest_key),
                     emoji=EMOJI_BASE64_KEY,
                 )
                 element = ErrorElement(key=key)
@@ -1381,16 +1495,28 @@ class Window:
         for row_num, row in enumerate(window.Rows):
             for col_num, element in enumerate(row):
                 if element.Type == ELEM_TYPE_COLUMN:
-                    key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
+                    key_dict = self._BuildKeyDictForWindow(
+                        top_window, element, key_dict
+                    )
                 if element.Type == ELEM_TYPE_FRAME:
-                    key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
+                    key_dict = self._BuildKeyDictForWindow(
+                        top_window, element, key_dict
+                    )
                 if element.Type == ELEM_TYPE_TAB_GROUP:
-                    key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
+                    key_dict = self._BuildKeyDictForWindow(
+                        top_window, element, key_dict
+                    )
                 if element.Type == ELEM_TYPE_PANE:
-                    key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
+                    key_dict = self._BuildKeyDictForWindow(
+                        top_window, element, key_dict
+                    )
                 if element.Type == ELEM_TYPE_TAB:
-                    key_dict = self._BuildKeyDictForWindow(top_window, element, key_dict)
-                if element.Key is None:  # if no key has been assigned.... create one for input elements
+                    key_dict = self._BuildKeyDictForWindow(
+                        top_window, element, key_dict
+                    )
+                if (
+                    element.Key is None
+                ):  # if no key has been assigned.... create one for input elements
                     if element.Type == ELEM_TYPE_BUTTON:
                         element.Key = element.ButtonText
                     elif element.Type == ELEM_TYPE_TAB:
@@ -1419,16 +1545,30 @@ class Window:
                         top_window.DictionaryKeyCounter += 1
                 if element.Key is not None:
                     if element.Key in key_dict.keys():
-                        if element.Type == ELEM_TYPE_BUTTON and FreeSimpleGUI.WARN_DUPLICATE_BUTTON_KEY_ERRORS:  # for Buttons see if should complain
-                            warnings.warn('*** Duplicate key found in your layout {} ***'.format(element.Key), UserWarning)
-                            warnings.warn('*** Replaced new key with {} ***'.format(str(element.Key) + str(self.UniqueKeyCounter)))
+                        if (
+                            element.Type == ELEM_TYPE_BUTTON
+                            and FreeSimpleGUI.WARN_DUPLICATE_BUTTON_KEY_ERRORS
+                        ):  # for Buttons see if should complain
+                            warnings.warn(
+                                "*** Duplicate key found in your layout {} ***".format(
+                                    element.Key
+                                ),
+                                UserWarning,
+                            )
+                            warnings.warn(
+                                "*** Replaced new key with {} ***".format(
+                                    str(element.Key) + str(self.UniqueKeyCounter)
+                                )
+                            )
                             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
                                 _error_popup_with_traceback(
-                                    'Duplicate key found in your layout',
-                                    'Dupliate key: {}'.format(element.Key),
-                                    'Is being replaced with: {}'.format(str(element.Key) + str(self.UniqueKeyCounter)),
-                                    'The line of code above shows you which layout, but does not tell you exactly where the element was defined',
-                                    'The element type is {}'.format(element.Type),
+                                    "Duplicate key found in your layout",
+                                    "Dupliate key: {}".format(element.Key),
+                                    "Is being replaced with: {}".format(
+                                        str(element.Key) + str(self.UniqueKeyCounter)
+                                    ),
+                                    "The line of code above shows you which layout, but does not tell you exactly where the element was defined",
+                                    "The element type is {}".format(element.Type),
                                 )
                         element.Key = str(element.Key) + str(self.UniqueKeyCounter)
                         self.UniqueKeyCounter += 1
@@ -1477,7 +1617,9 @@ class Window:
                     ELEM_TYPE_PANE,
                     ELEM_TYPE_TAB,
                 ):
-                    elem_list = self._build_element_list_for_form(top_window, element, elem_list)
+                    elem_list = self._build_element_list_for_form(
+                        top_window, element, elem_list
+                    )
         return elem_list
 
     def save_to_disk(self, filename):
@@ -1496,10 +1638,10 @@ class Window:
                     remove_these.append(key)
             for key in remove_these:
                 del values[key]
-            with open(filename, 'wb') as sf:
+            with open(filename, "wb") as sf:
                 pickle.dump(values, sf)
         except:
-            print('*** Error saving Window contents to disk ***')
+            print("*** Error saving Window contents to disk ***")
 
     def load_from_disk(self, filename):
         """
@@ -1509,10 +1651,10 @@ class Window:
         :type filename:  (str)
         """
         try:
-            with open(filename, 'rb') as df:
+            with open(filename, "rb") as df:
                 self.Fill(pickle.load(df))
         except:
-            print('*** Error loading form to disk ***')
+            print("*** Error loading form to disk ***")
 
     def get_screen_dimensions(self):
         """
@@ -1524,7 +1666,9 @@ class Window:
 
         if self.TKrootDestroyed or self.TKroot is None:
             return Window.get_screen_size()
-        screen_width = self.TKroot.winfo_screenwidth()  # get window info to move to middle of screen
+        screen_width = (
+            self.TKroot.winfo_screenwidth()
+        )  # get window info to move to middle of screen
         screen_height = self.TKroot.winfo_screenheight()
         return screen_width, screen_height
 
@@ -1537,7 +1681,7 @@ class Window:
         :type y:  (int)
         """
         try:
-            self.TKroot.geometry('+{}+{}'.format(x, y))
+            self.TKroot.geometry("+{}+{}".format(x, y))
             self.config_last_location = (int(x), (int(y)))
 
         except:
@@ -1549,7 +1693,7 @@ class Window:
 
         This is a conveinence method. There are no tkinter calls involved, only pure PySimpleGUI API calls.
         """
-        if not self._is_window_created('tried Window.move_to_center'):
+        if not self._is_window_created("tried Window.move_to_center"):
             return
         screen_width, screen_height = self.get_screen_dimensions()
         win_width, win_height = self.size
@@ -1560,7 +1704,7 @@ class Window:
         """
         Minimize this window to the task bar
         """
-        if not self._is_window_created('tried Window.minimize'):
+        if not self._is_window_created("tried Window.minimize"):
             return
         if self.use_custom_titlebar is True:
             self._custom_titlebar_minimize()
@@ -1575,30 +1719,30 @@ class Window:
         The reason for the difference is the title bar is removed in some cases when using fullscreen option
         """
 
-        if not self._is_window_created('tried Window.maximize'):
+        if not self._is_window_created("tried Window.maximize"):
             return
         if not running_linux():
-            self.TKroot.state('zoomed')
+            self.TKroot.state("zoomed")
         else:
-            self.TKroot.attributes('-fullscreen', True)
+            self.TKroot.attributes("-fullscreen", True)
         self.maximized = True
 
     def normal(self):
         """
         Restore a window to a non-maximized state.  Does different things depending on platform.  See Maximize for more.
         """
-        if not self._is_window_created('tried Window.normal'):
+        if not self._is_window_created("tried Window.normal"):
             return
         if self.use_custom_titlebar:
             self._custom_titlebar_restore()
         else:
-            if self.TKroot.state() == 'iconic':
+            if self.TKroot.state() == "iconic":
                 self.TKroot.deiconify()
             else:
                 if not running_linux():
-                    self.TKroot.state('normal')
+                    self.TKroot.state("normal")
                 else:
-                    self.TKroot.attributes('-fullscreen', False)
+                    self.TKroot.attributes("-fullscreen", False)
             self.maximized = False
 
     def _StartMoveUsingControlKey(self, event):
@@ -1616,7 +1760,10 @@ class Window:
         :param event: event information passed in by tkinter. Contains x,y position of mouse
         :type event:  (event)
         """
-        if (isinstance(event.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS) or event.widget in self._grab_anywhere_ignore_these_list) and event.widget not in self._grab_anywhere_include_these_list:
+        if (
+            isinstance(event.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS)
+            or event.widget in self._grab_anywhere_ignore_these_list
+        ) and event.widget not in self._grab_anywhere_include_these_list:
             # print('Found widget to ignore in grab anywhere...')
             return
         self._start_move_save_offset(event)
@@ -1638,7 +1785,7 @@ class Window:
         self._mousex = event.x + event.widget.winfo_rootx()
         self._mousey = event.y + event.widget.winfo_rooty()
         geometry = self.TKroot.geometry()
-        location = geometry[geometry.find('+') + 1 :].split('+')
+        location = geometry[geometry.find("+") + 1 :].split("+")
         self._startx = int(location[0])
         self._starty = int(location[1])
         self._mouse_offset_x = self._mousex - self._startx
@@ -1650,7 +1797,7 @@ class Window:
                 if win == self:
                     continue
                 geometry = win.TKroot.geometry()
-                location = geometry[geometry.find('+') + 1 :].split('+')
+                location = geometry[geometry.find("+") + 1 :].split("+")
                 _startx = int(location[0])
                 _starty = int(location[1])
                 win._mouse_offset_x = event.x_root - _startx
@@ -1665,27 +1812,38 @@ class Window:
         :param event: event information passed in by tkinter. Contains x,y position of mouse
         :type event:  (event)
         """
-        if (isinstance(event.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS) or event.widget in self._grab_anywhere_ignore_these_list) and event.widget not in self._grab_anywhere_include_these_list:
+        if (
+            isinstance(event.widget, GRAB_ANYWHERE_IGNORE_THESE_WIDGETS)
+            or event.widget in self._grab_anywhere_ignore_these_list
+        ) and event.widget not in self._grab_anywhere_include_these_list:
             # print('Found widget to ignore in grab anywhere...')
             return
 
         self._OnMotion(event)
 
     def _OnMotion(self, event):
-
-        self.TKroot.geometry('+{}+{}'.format(event.x_root - self._mouse_offset_x,event.y_root - self._mouse_offset_y))
+        self.TKroot.geometry(
+            "+{}+{}".format(
+                event.x_root - self._mouse_offset_x, event.y_root - self._mouse_offset_y
+            )
+        )
         # ------ Move All Windows code ------
         try:
             if Window._move_all_windows:
                 for win in Window._active_windows:
                     if win == self:
                         continue
-                    win.TKroot.geometry('+{}+{}'.format(event.x_root - win._mouse_offset_x,event.y_root - win._mouse_offset_y))
+                    win.TKroot.geometry(
+                        "+{}+{}".format(
+                            event.x_root - win._mouse_offset_x,
+                            event.y_root - win._mouse_offset_y,
+                        )
+                    )
         except Exception as e:
-            print('on motion error', e)
+            print("on motion error", e)
 
     def _focus_callback(self, event):
-        print('Focus event = {} window = {}'.format(event, self.Title))
+        print("Focus event = {} window = {}".format(event, self.Title))
 
     def _config_callback(self, event):
         """
@@ -1707,16 +1865,16 @@ class Window:
         :param event:            From tkinter and is not used
         :type event:             Any
         """
-        if not self._is_window_created('Tried to move window using arrow keys'):
+        if not self._is_window_created("Tried to move window using arrow keys"):
             return
         x, y = self.current_location()
-        if event.keysym == 'Up':
+        if event.keysym == "Up":
             self.move(x, y - 1)
-        elif event.keysym == 'Down':
+        elif event.keysym == "Down":
             self.move(x, y + 1)
-        elif event.keysym == 'Left':
+        elif event.keysym == "Left":
             self.move(x - 1, y)
-        elif event.keysym == 'Right':
+        elif event.keysym == "Right":
             self.move(x + 1, y)
 
     """
@@ -1775,10 +1933,10 @@ class Window:
         """
         self.LastButtonClicked = None
         self.FormRemainedOpen = True
-        if event.char != '':
+        if event.char != "":
             self.LastKeyboardEvent = event.char
         else:
-            self.LastKeyboardEvent = str(event.keysym) + ':' + str(event.keycode)
+            self.LastKeyboardEvent = str(event.keysym) + ":" + str(event.keycode)
         # if not self.NonBlocking:
         #     _BuildResults(self, False, self)
         _exit_mainloop(self)
@@ -1793,7 +1951,9 @@ class Window:
         """
         self.LastButtonClicked = None
         self.FormRemainedOpen = True
-        self.LastKeyboardEvent = 'MouseWheel:Down' if event.delta < 0 or event.num == 5 else 'MouseWheel:Up'
+        self.LastKeyboardEvent = (
+            "MouseWheel:Down" if event.delta < 0 or event.num == 5 else "MouseWheel:Up"
+        )
         _exit_mainloop(self)
 
     def _Close(self, without_event=False):
@@ -1825,7 +1985,9 @@ class Window:
         """
 
         try:
-            del Window._active_windows[self]  # will only be in the list if window was explicitly finalized
+            del Window._active_windows[
+                self
+            ]  # will only be in the list if window was explicitly finalized
         except:
             pass
 
@@ -1884,7 +2046,9 @@ class Window:
         """
         if self.DisableClose:
             return
-        if self.CurrentlyRunningMainloop:  # quit if this is the current mainloop, otherwise don't quit!
+        if (
+            self.CurrentlyRunningMainloop
+        ):  # quit if this is the current mainloop, otherwise don't quit!
             _exit_mainloop(self)
             if self.close_destroys_window:
                 self.TKroot.destroy()  # destroy this window
@@ -1909,25 +2073,25 @@ class Window:
         """
         Disables window from taking any input from the user
         """
-        if not self._is_window_created('tried Window.disable'):
+        if not self._is_window_created("tried Window.disable"):
             return
-        self.TKroot.attributes('-disabled', 1)
+        self.TKroot.attributes("-disabled", 1)
         # self.TKroot.grab_set_global()
 
     def enable(self):
         """
         Re-enables window to take user input after having it be Disabled previously
         """
-        if not self._is_window_created('tried Window.enable'):
+        if not self._is_window_created("tried Window.enable"):
             return
-        self.TKroot.attributes('-disabled', 0)
+        self.TKroot.attributes("-disabled", 0)
         # self.TKroot.grab_release()
 
     def hide(self):
         """
         Hides the window from the screen and the task bar
         """
-        if not self._is_window_created('tried Window.hide'):
+        if not self._is_window_created("tried Window.hide"):
             return
         self._Hidden = True
         self.TKroot.withdraw()
@@ -1936,7 +2100,7 @@ class Window:
         """
         Used to bring back a window that was previously hidden using the Hide method
         """
-        if not self._is_window_created('tried Window.un_hide'):
+        if not self._is_window_created("tried Window.un_hide"):
             return
         if self._Hidden:
             self.TKroot.deiconify()
@@ -1956,17 +2120,17 @@ class Window:
         channel to 0.  NOTE that on some platforms alpha is not supported. The window will remain showing on these
         platforms.  The Raspberry Pi for example does not have an alpha setting
         """
-        if not self._is_window_created('tried Window.disappear'):
+        if not self._is_window_created("tried Window.disappear"):
             return
-        self.TKroot.attributes('-alpha', 0)
+        self.TKroot.attributes("-alpha", 0)
 
     def reappear(self):
         """
         Causes a window previously made to "Disappear" (using that method). Does this by restoring the alpha channel
         """
-        if not self._is_window_created('tried Window.reappear'):
+        if not self._is_window_created("tried Window.reappear"):
             return
-        self.TKroot.attributes('-alpha', 255)
+        self.TKroot.attributes("-alpha", 255)
 
     def set_alpha(self, alpha):
         """
@@ -1975,10 +2139,10 @@ class Window:
         :param alpha: 0 to 1. 0 is completely transparent.  1 is completely visible and solid (can't see through)
         :type alpha:  (float)
         """
-        if not self._is_window_created('tried Window.set_alpha'):
+        if not self._is_window_created("tried Window.set_alpha"):
             return
         self._AlphaChannel = alpha
-        self.TKroot.attributes('-alpha', alpha)
+        self.TKroot.attributes("-alpha", alpha)
 
     @property
     def alpha_channel(self):
@@ -1997,26 +2161,26 @@ class Window:
         :param alpha: 0 to 1. 0 is completely transparent.  1 is completely visible and solid (can't see through)
         :type alpha:  (float)
         """
-        if not self._is_window_created('tried Window.alpha_channel'):
+        if not self._is_window_created("tried Window.alpha_channel"):
             return
         self._AlphaChannel = alpha
-        self.TKroot.attributes('-alpha', alpha)
+        self.TKroot.attributes("-alpha", alpha)
 
     def bring_to_front(self):
         """
         Brings this window to the top of all other windows (perhaps may not be brought before a window made to "stay
         on top")
         """
-        if not self._is_window_created('tried Window.bring_to_front'):
+        if not self._is_window_created("tried Window.bring_to_front"):
             return
         if running_windows():
             try:
-                self.TKroot.wm_attributes('-topmost', 0)
-                self.TKroot.wm_attributes('-topmost', 1)
+                self.TKroot.wm_attributes("-topmost", 0)
+                self.TKroot.wm_attributes("-topmost", 1)
                 if not self.KeepOnTop:
-                    self.TKroot.wm_attributes('-topmost', 0)
+                    self.TKroot.wm_attributes("-topmost", 0)
             except Exception as e:
-                warnings.warn('Problem in Window.bring_to_front' + str(e), UserWarning)
+                warnings.warn("Problem in Window.bring_to_front" + str(e), UserWarning)
         else:
             try:
                 self.TKroot.lift()
@@ -2027,7 +2191,7 @@ class Window:
         """
         Pushes this window to the bottom of the stack of windows. It is the opposite of BringToFront
         """
-        if not self._is_window_created('tried Window.send_to_back'):
+        if not self._is_window_created("tried Window.send_to_back"):
             return
         try:
             self.TKroot.lower()
@@ -2040,27 +2204,35 @@ class Window:
         as if the window was created with this set.  The Window is also brought
         to the front
         """
-        if not self._is_window_created('tried Window.keep_on_top_set'):
+        if not self._is_window_created("tried Window.keep_on_top_set"):
             return
         self.KeepOnTop = True
         self.bring_to_front()
         try:
-            self.TKroot.wm_attributes('-topmost', 1)
+            self.TKroot.wm_attributes("-topmost", 1)
         except Exception as e:
-            warnings.warn('Problem in Window.keep_on_top_set trying to set wm_attributes topmost' + str(e), UserWarning)
+            warnings.warn(
+                "Problem in Window.keep_on_top_set trying to set wm_attributes topmost"
+                + str(e),
+                UserWarning,
+            )
 
     def keep_on_top_clear(self):
         """
         Clears keep_on_top after a window has been created.  Effect is the same
         as if the window was created with this set.
         """
-        if not self._is_window_created('tried Window.keep_on_top_clear'):
+        if not self._is_window_created("tried Window.keep_on_top_clear"):
             return
         self.KeepOnTop = False
         try:
-            self.TKroot.wm_attributes('-topmost', 0)
+            self.TKroot.wm_attributes("-topmost", 0)
         except Exception as e:
-            warnings.warn('Problem in Window.keep_on_top_clear trying to clear wm_attributes topmost' + str(e), UserWarning)
+            warnings.warn(
+                "Problem in Window.keep_on_top_clear trying to clear wm_attributes topmost"
+                + str(e),
+                UserWarning,
+            )
 
     def current_location(self, more_accurate=False, without_titlebar=False):
         """
@@ -2080,19 +2252,23 @@ class Window:
         :rtype:                  Tuple[(int | None), (int | None)]
         """
 
-        if not self._is_window_created('tried Window.current_location'):
+        if not self._is_window_created("tried Window.current_location"):
             return (None, None)
         try:
             if without_titlebar is True:
                 x, y = self.TKroot.winfo_rootx(), self.TKroot.winfo_rooty()
             elif more_accurate:
                 geometry = self.TKroot.geometry()
-                location = geometry[geometry.find('+') + 1 :].split('+')
+                location = geometry[geometry.find("+") + 1 :].split("+")
                 x, y = int(location[0]), int(location[1])
             else:
                 x, y = int(self.TKroot.winfo_x()), int(self.TKroot.winfo_y())
         except Exception as e:
-            warnings.warn('Error in Window.current_location. Trouble getting x,y location\n' + str(e), UserWarning)
+            warnings.warn(
+                "Error in Window.current_location. Trouble getting x,y location\n"
+                + str(e),
+                UserWarning,
+            )
             x, y = (None, None)
         return (x, y)
 
@@ -2104,16 +2280,19 @@ class Window:
         :rtype:               Tuple[(int | None), (int | None)]
         """
 
-        if not self._is_window_created('tried Window.current_location'):
+        if not self._is_window_created("tried Window.current_location"):
             return (None, None)
         try:
             geometry = self.TKroot.geometry()
-            geometry_tuple = geometry.split('+')
-            window_size = geometry_tuple[0].split('x')
+            geometry_tuple = geometry.split("+")
+            window_size = geometry_tuple[0].split("x")
             x, y = int(window_size[0]), int(window_size[1])
         except Exception as e:
             warnings.warn(
-                'Error in Window.current_size_accurate. Trouble getting x,y size\n{} {}'.format(geometry, geometry_tuple) + str(e),
+                "Error in Window.current_size_accurate. Trouble getting x,y size\n{} {}".format(
+                    geometry, geometry_tuple
+                )
+                + str(e),
                 UserWarning,
             )
             x, y = (None, None)
@@ -2127,7 +2306,7 @@ class Window:
         :return: (width, height) of the window
         :rtype:  Tuple[(int), (int)] or Tuple[None, None]
         """
-        if not self._is_window_created('Tried to use Window.size property'):
+        if not self._is_window_created("Tried to use Window.size property"):
             return (None, None)
         win_width = self.TKroot.winfo_width()
         win_height = self.TKroot.winfo_height()
@@ -2142,7 +2321,7 @@ class Window:
         :type size:  (int, int)
         """
         try:
-            self.TKroot.geometry('{}x{}'.format(size[0], size[1]))
+            self.TKroot.geometry("{}x{}".format(size[0], size[1]))
             self.TKroot.update_idletasks()
         except:
             pass
@@ -2155,10 +2334,12 @@ class Window:
         :param size: (width, height) of the desired window size
         :type size:  (int, int)
         """
-        if not self._is_window_created('Tried to change the size of the window prior to creation.'):
+        if not self._is_window_created(
+            "Tried to change the size of the window prior to creation."
+        ):
             return
         try:
-            self.TKroot.geometry('{}x{}'.format(size[0], size[1]))
+            self.TKroot.geometry("{}x{}".format(size[0], size[1]))
             self.TKroot.update_idletasks()
         except:
             pass
@@ -2170,7 +2351,7 @@ class Window:
         :param size: (width, height) tuple (int, int) of the desired window size in pixels
         :type size:  (int, int)
         """
-        if not self._is_window_created('tried Window.set_min_size'):
+        if not self._is_window_created("tried Window.set_min_size"):
             return
         self.TKroot.minsize(size[0], size[1])
         self.TKroot.update_idletasks()
@@ -2186,12 +2367,14 @@ class Window:
         :type y_axis_enable: (bool)
         """
 
-        if not self._is_window_created('tried Window.set_resixable'):
+        if not self._is_window_created("tried Window.set_resixable"):
             return
         try:
             self.TKroot.resizable(x_axis_enable, y_axis_enable)
         except Exception as e:
-            _error_popup_with_traceback('Window.set_resizable - tkinter reported error', e)
+            _error_popup_with_traceback(
+                "Window.set_resizable - tkinter reported error", e
+            )
 
     def visibility_changed(self):
         """
@@ -2207,13 +2390,13 @@ class Window:
         :param color: Color string that defines the transparent color
         :type color:  (str)
         """
-        if not self._is_window_created('tried Window.set_transparent_color'):
+        if not self._is_window_created("tried Window.set_transparent_color"):
             return
         try:
-            self.TKroot.attributes('-transparentcolor', color)
+            self.TKroot.attributes("-transparentcolor", color)
             self.TransparentColor = color
         except:
-            print('Transparent color not supported on this platform (windows only)')
+            print("Transparent color not supported on this platform (windows only)")
 
     def mouse_location(self):
         """
@@ -2223,7 +2406,7 @@ class Window:
         :return:    The location of the mouse pointer
         :rtype:     (int, int)
         """
-        if not self._is_window_created('tried Window.mouse_location'):
+        if not self._is_window_created("tried Window.mouse_location"):
             return (0, 0)
 
         return (self.TKroot.winfo_pointerx(), self.TKroot.winfo_pointery())
@@ -2233,22 +2416,22 @@ class Window:
         Turns on Grab Anywhere functionality AFTER a window has been created.  Don't try on a window that's not yet
         been Finalized or Read.
         """
-        if not self._is_window_created('tried Window.grab_any_where_on'):
+        if not self._is_window_created("tried Window.grab_any_where_on"):
             return
-        self.TKroot.bind('<ButtonPress-1>', self._StartMoveGrabAnywhere)
-        self.TKroot.bind('<ButtonRelease-1>', self._StopMove)
-        self.TKroot.bind('<B1-Motion>', self._OnMotionGrabAnywhere)
+        self.TKroot.bind("<ButtonPress-1>", self._StartMoveGrabAnywhere)
+        self.TKroot.bind("<ButtonRelease-1>", self._StopMove)
+        self.TKroot.bind("<B1-Motion>", self._OnMotionGrabAnywhere)
 
     def grab_any_where_off(self):
         """
         Turns off Grab Anywhere functionality AFTER a window has been created.  Don't try on a window that's not yet
         been Finalized or Read.
         """
-        if not self._is_window_created('tried Window.grab_any_where_off'):
+        if not self._is_window_created("tried Window.grab_any_where_off"):
             return
-        self.TKroot.unbind('<ButtonPress-1>')
-        self.TKroot.unbind('<ButtonRelease-1>')
-        self.TKroot.unbind('<B1-Motion>')
+        self.TKroot.unbind("<ButtonPress-1>")
+        self.TKroot.unbind("<ButtonRelease-1>")
+        self.TKroot.unbind("<B1-Motion>")
 
     def _user_bind_callback(self, bind_string, event, propagate=True):
         """
@@ -2262,7 +2445,7 @@ class Window:
         :type propagate:    (bool)
         """
         # print('bind callback', bind_string, event)
-        key = self.user_bind_dict.get(bind_string, '')
+        key = self.user_bind_dict.get(bind_string, "")
         self.user_bind_event = event
         if key is not None:
             self.LastButtonClicked = key
@@ -2270,7 +2453,7 @@ class Window:
             self.LastButtonClicked = bind_string
         self.FormRemainedOpen = True
         _exit_mainloop(self)
-        return 'break' if propagate is not True else None
+        return "break" if propagate is not True else None
 
     def bind(self, bind_string, key, propagate=True):
         """
@@ -2283,10 +2466,13 @@ class Window:
         :param propagate:   If True then tkinter will be told to propagate the event
         :type propagate:    (bool)
         """
-        if not self._is_window_created('tried Window.bind'):
+        if not self._is_window_created("tried Window.bind"):
             return
         try:
-            self.TKroot.bind(bind_string, lambda evt: self._user_bind_callback(bind_string, evt, propagate))
+            self.TKroot.bind(
+                bind_string,
+                lambda evt: self._user_bind_callback(bind_string, evt, propagate),
+            )
         except Exception:
             self.TKroot.unbind_all(bind_string)
             return
@@ -2302,7 +2488,7 @@ class Window:
         :param bind_string: The string tkinter expected in its bind function
         :type bind_string:  (str)
         """
-        if not self._is_window_created('tried Window.unbind'):
+        if not self._is_window_created("tried Window.unbind"):
             return
         self.TKroot.unbind(bind_string)
 
@@ -2336,20 +2522,22 @@ class Window:
         """
         Enables the internal debugger. By default, the debugger IS enabled
         """
-        if not self._is_window_created('tried Window.enable_debugger'):
+        if not self._is_window_created("tried Window.enable_debugger"):
             return
-        self.TKroot.bind('<Cancel>', self._callback_main_debugger_window_create_keystroke)
-        self.TKroot.bind('<Pause>', self._callback_popout_window_create_keystroke)
+        self.TKroot.bind(
+            "<Cancel>", self._callback_main_debugger_window_create_keystroke
+        )
+        self.TKroot.bind("<Pause>", self._callback_popout_window_create_keystroke)
         self.DebuggerEnabled = True
 
     def disable_debugger(self):
         """
         Disable the internal debugger. By default the debugger is ENABLED
         """
-        if not self._is_window_created('tried Window.disable_debugger'):
+        if not self._is_window_created("tried Window.disable_debugger"):
             return
-        self.TKroot.unbind('<Cancel>')
-        self.TKroot.unbind('<Pause>')
+        self.TKroot.unbind("<Cancel>")
+        self.TKroot.unbind("<Pause>")
         self.DebuggerEnabled = False
 
     def set_title(self, title):
@@ -2359,7 +2547,7 @@ class Window:
         :param title: The string to set the title to
         :type title:  (str)
         """
-        if not self._is_window_created('tried Window.set_title'):
+        if not self._is_window_created("tried Window.set_title"):
             return
         if self._has_custom_titlebar:
             try:  # just in case something goes badly, don't crash
@@ -2376,14 +2564,17 @@ class Window:
 
         NOTE - Sorry Mac users - you can't have modal windows.... lobby your tkinter Mac devs
         """
-        if not self._is_window_created('tried Window.make_modal'):
+        if not self._is_window_created("tried Window.make_modal"):
             return
 
         if running_mac() and FreeSimpleGUI.ENABLE_MAC_MODAL_DISABLE_PATCH:
             return
 
         # if modal windows have been disabled globally
-        if not FreeSimpleGUI.DEFAULT_MODAL_WINDOWS_ENABLED and not FreeSimpleGUI.DEFAULT_MODAL_WINDOWS_FORCED:
+        if (
+            not FreeSimpleGUI.DEFAULT_MODAL_WINDOWS_ENABLED
+            and not FreeSimpleGUI.DEFAULT_MODAL_WINDOWS_FORCED
+        ):
             return
 
         try:
@@ -2391,13 +2582,13 @@ class Window:
             self.TKroot.grab_set()
             self.TKroot.focus_force()
         except Exception as e:
-            print('Exception trying to make modal', e)
+            print("Exception trying to make modal", e)
 
     def force_focus(self):
         """
         Forces this window to take focus
         """
-        if not self._is_window_created('tried Window.force_focus'):
+        if not self._is_window_created("tried Window.force_focus"):
             return
         self.TKroot.focus_force()
 
@@ -2419,12 +2610,12 @@ class Window:
         :type cursor:  (str)
         """
 
-        if not self._is_window_created('tried Window.set_cursor'):
+        if not self._is_window_created("tried Window.set_cursor"):
             return
         try:
             self.TKroot.config(cursor=cursor)
         except Exception as e:
-            print('Warning bad cursor specified ', cursor)
+            print("Warning bad cursor specified ", cursor)
             print(e)
 
     def ding(self, display_number=0):
@@ -2434,13 +2625,15 @@ class Window:
         :param display_number: Passed to tkinter's bell method as parameter "displayof".
         :type display_number:  int
         """
-        if not self._is_window_created('tried Window.ding'):
+        if not self._is_window_created("tried Window.ding"):
             return
         try:
             self.TKroot.bell(display_number)
         except Exception as e:
             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
-                _error_popup_with_traceback('Window.ding() - tkinter reported error from bell() call', e)
+                _error_popup_with_traceback(
+                    "Window.ding() - tkinter reported error from bell() call", e
+                )
 
     def _window_tkvar_changed_callback(self, *args):
         """
@@ -2467,7 +2660,7 @@ class Window:
 
         if self.thread_strvar is None:
             self.thread_strvar = tk.StringVar()
-            self.thread_strvar.trace('w', self._window_tkvar_changed_callback)
+            self.thread_strvar.trace("w", self._window_tkvar_changed_callback)
 
     def write_event_value(self, key, value):
         """
@@ -2480,12 +2673,12 @@ class Window:
         """
 
         if self.thread_queue is None:
-            print('*** Warning Window.write_event_value - no thread queue found ***')
+            print("*** Warning Window.write_event_value - no thread queue found ***")
             return
         # self.thread_lock.acquire()  # first lock the critical section
         self.thread_queue.put(item=(key, value))
         self.TKroot.tk.willdispatch()  # brilliant bit of code provided by Giuliano who I owe a million thank yous!
-        self.thread_strvar.set('new item')
+        self.thread_strvar.set("new item")
 
     def _queued_thread_event_read(self):
         if self.thread_queue is None:
@@ -2499,7 +2692,6 @@ class Window:
         return message
 
     def _queued_thread_event_available(self):
-
         if self.thread_queue is None:
             return False
         # self.thread_lock.acquire()
@@ -2542,7 +2734,11 @@ class Window:
         try:
             from PIL import ImageGrab
         except:
-            warnings.warn('Failed to import PIL. In a future version, this will raise an ImportError instead of returning None', DeprecationWarning, stacklevel=2)
+            warnings.warn(
+                "Failed to import PIL. In a future version, this will raise an ImportError instead of returning None",
+                DeprecationWarning,
+                stacklevel=2,
+            )
             return None
         try:
             # Get location of window to save
@@ -2561,19 +2757,28 @@ class Window:
             else:
                 size_adjustment = (0, 0)
             # Make the "Bounding rectangle" used by PLK to do the screen grap "operation
-            rect = (pos[0], pos[1], pos[0] + size[0] + size_adjustment[0], pos[1] + size[1] + size_adjustment[1])
+            rect = (
+                pos[0],
+                pos[1],
+                pos[0] + size[0] + size_adjustment[0],
+                pos[1] + size[1] + size_adjustment[1],
+            )
             # Grab the image
             grab = ImageGrab.grab(bbox=rect)
             # Save the grabbed image to disk
         except Exception as e:
             # print(e)
-            popup_error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
+            popup_error_with_traceback(
+                "Screen capture failure",
+                "Error happened while trying to save screencapture",
+                e,
+            )
 
             return None
         # return grab
         if filename is None:
-            folder = pysimplegui_user_settings.get('-screenshots folder-', '')
-            filename = pysimplegui_user_settings.get('-screenshots filename-', '')
+            folder = pysimplegui_user_settings.get("-screenshots folder-", "")
+            filename = pysimplegui_user_settings.get("-screenshots filename-", "")
             full_filename = os.path.join(folder, filename)
         else:
             full_filename = filename
@@ -2581,11 +2786,15 @@ class Window:
             try:
                 grab.save(full_filename)
             except Exception as e:
-                popup_error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
+                popup_error_with_traceback(
+                    "Screen capture failure",
+                    "Error happened while trying to save screencapture",
+                    e,
+                )
         else:
             popup_error_with_traceback(
-                'Screen capture failure',
-                'You have attempted a screen capture but have not set up a good filename to save to',
+                "Screen capture failure",
+                "You have attempted a screen capture but have not set up a good filename to save to",
             )
         return grab
 
@@ -2612,7 +2821,9 @@ class Window:
         :rtype:         threading.Thread
         """
 
-        thread = threading.Thread(target=_long_func_thread, args=(self, end_key, func), daemon=True)
+        thread = threading.Thread(
+            target=_long_func_thread, args=(self, end_key, func), daemon=True
+        )
         thread.start()
         return thread
 
@@ -2647,13 +2858,15 @@ class Window:
         :rtype:     float
         """
 
-        if not self._is_window_created('Tried Window.set_scaling'):
+        if not self._is_window_created("Tried Window.set_scaling"):
             return FreeSimpleGUI.DEFAULT_SCALING
         try:
-            scaling = self.TKroot.tk.call('tk', 'scaling')
+            scaling = self.TKroot.tk.call("tk", "scaling")
         except Exception as e:
             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
-                _error_popup_with_traceback('Window.get_scaling() - tkinter reported error', e)
+                _error_popup_with_traceback(
+                    "Window.get_scaling() - tkinter reported error", e
+                )
             scaling = FreeSimpleGUI.DEFAULT_SCALING
 
         return scaling
@@ -2663,34 +2876,34 @@ class Window:
 
     def _custom_titlebar_restore(self):
         if running_linux():
-            self.TKroot.unbind('<Button-1>')
+            self.TKroot.unbind("<Button-1>")
             self.TKroot.deiconify()
 
             # self.ParentForm.TKroot.wm_overrideredirect(True)
-            self.TKroot.wm_attributes('-type', 'dock')
+            self.TKroot.wm_attributes("-type", "dock")
 
         else:
-            self.TKroot.unbind('<Expose>')
+            self.TKroot.unbind("<Expose>")
             self.TKroot.wm_overrideredirect(True)
-        if self.TKroot.state() == 'iconic':
+        if self.TKroot.state() == "iconic":
             self.TKroot.deiconify()
         else:
             if not running_linux():
-                self.TKroot.state('normal')
+                self.TKroot.state("normal")
             else:
-                self.TKroot.attributes('-fullscreen', False)
+                self.TKroot.attributes("-fullscreen", False)
         self.maximized = False
 
     def _custom_titlebar_minimize(self):
         if running_linux():
-            self.TKroot.wm_attributes('-type', 'normal')
+            self.TKroot.wm_attributes("-type", "normal")
             self.TKroot.wm_overrideredirect(False)
             self.TKroot.iconify()
-            self.TKroot.bind('<Button-1>', self._custom_titlebar_restore_callback)
+            self.TKroot.bind("<Button-1>", self._custom_titlebar_restore_callback)
         else:
             self.TKroot.wm_overrideredirect(False)
             self.TKroot.iconify()
-            self.TKroot.bind('<Expose>', self._custom_titlebar_restore_callback)
+            self.TKroot.bind("<Expose>", self._custom_titlebar_restore_callback)
 
     def _custom_titlebar_callback(self, key):
         """
@@ -2727,7 +2940,9 @@ class Window:
         :return:                Timer ID for the timer
         :rtype:                 int
         """
-        timer = _TimerPeriodic(self, frequency_ms=frequency_ms, key=key, repeating=repeating)
+        timer = _TimerPeriodic(
+            self, frequency_ms=frequency_ms, key=key, repeating=repeating
+        )
         return timer.id
 
     def timer_stop(self, timer_id):
@@ -2761,7 +2976,9 @@ class Window:
             if not window.is_closed():
                 sys.stdout = element
                 break
-        cls._rerouted_stdout_stack = [item for item in cls._rerouted_stdout_stack if not item[0].is_closed()]
+        cls._rerouted_stdout_stack = [
+            item for item in cls._rerouted_stdout_stack if not item[0].is_closed()
+        ]
         if len(cls._rerouted_stdout_stack) == 0 and cls._original_stdout is not None:
             sys.stdout = cls._original_stdout
         # print('Restored stdout... new stack:',  [item[0].Title for item in cls._rerouted_stdout_stack ])
@@ -2773,7 +2990,9 @@ class Window:
             if not window.is_closed():
                 sys.stderr = element
                 break
-        cls._rerouted_stderr_stack = [item for item in cls._rerouted_stderr_stack if not item[0].is_closed()]
+        cls._rerouted_stderr_stack = [
+            item for item in cls._rerouted_stderr_stack if not item[0].is_closed()
+        ]
         if len(cls._rerouted_stderr_stack) == 0 and cls._original_stderr is not None:
             sys.stderr = cls._original_stderr
 
@@ -2802,16 +3021,17 @@ class Window:
         """
         return self.read(*args, **kwargs)
 
-    def _is_window_created(self, additional_message=''):
+    def _is_window_created(self, additional_message=""):
         msg = str(additional_message)
         if self.TKroot is None:
             warnings.warn(
-                'You cannot perform operations on a Window until it is read or finalized. Adding a "finalize=True" parameter to your Window creation will fix this. ' + msg,
+                'You cannot perform operations on a Window until it is read or finalized. Adding a "finalize=True" parameter to your Window creation will fix this. '
+                + msg,
                 UserWarning,
             )
             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
-                    'You cannot perform operations on a Window until it is read or finalized.',
+                    "You cannot perform operations on a Window until it is read or finalized.",
                     'Adding a "finalize=True" parameter to your Window creation will likely fix this',
                     msg,
                 )
@@ -2820,7 +3040,11 @@ class Window:
 
     def _has_custom_titlebar_element(self):
         for elem in self.AllKeysDict.values():
-            if elem.Key in (TITLEBAR_MAXIMIZE_KEY, TITLEBAR_CLOSE_KEY, TITLEBAR_IMAGE_KEY):
+            if elem.Key in (
+                TITLEBAR_MAXIMIZE_KEY,
+                TITLEBAR_CLOSE_KEY,
+                TITLEBAR_IMAGE_KEY,
+            ):
                 return True
             if elem.metadata == TITLEBAR_METADATA_MARKER:
                 return True

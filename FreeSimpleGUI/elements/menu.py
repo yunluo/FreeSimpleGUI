@@ -83,10 +83,20 @@ class Menu(Element):
         :type metadata:                   (Any)
         """
 
-        self.BackgroundColor = background_color if background_color is not None else theme_input_background_color()
-        self.TextColor = text_color if text_color is not None else theme_input_text_color()
+        self.BackgroundColor = (
+            background_color
+            if background_color is not None
+            else theme_input_background_color()
+        )
+        self.TextColor = (
+            text_color if text_color is not None else theme_input_text_color()
+        )
 
-        self.DisabledTextColor = disabled_text_color if disabled_text_color is not None else COLOR_SYSTEM_DEFAULT
+        self.DisabledTextColor = (
+            disabled_text_color
+            if disabled_text_color is not None
+            else COLOR_SYSTEM_DEFAULT
+        )
         self.MenuDefinition = copy.deepcopy(menu_definition)
         self.Widget = self.TKMenu = None  # type: tk.Menu
         self.MenuItemChosen = None
@@ -139,23 +149,35 @@ class Menu(Element):
         :param visible:         control visibility of element
         :type visible:          (bool)
         """
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Menu.update - The window was closed')
+            _error_popup_with_traceback("Error in Menu.update - The window was closed")
             return
 
         if menu_definition is not None:
             self.MenuDefinition = copy.deepcopy(menu_definition)
             if self.TKMenu is None:  # if no menu exists, make one
-                self.TKMenu = tk.Menu(self.ParentForm.TKroot, tearoff=self.Tearoff, tearoffcommand=self._tearoff_menu_callback)  # create the menubar
+                self.TKMenu = tk.Menu(
+                    self.ParentForm.TKroot,
+                    tearoff=self.Tearoff,
+                    tearoffcommand=self._tearoff_menu_callback,
+                )  # create the menubar
             menubar = self.TKMenu
             # Delete all the menu items (assuming 10000 should be a high enough number to cover them all)
             menubar.delete(0, 10000)
-            self.Widget = self.TKMenu  # same the new menu so user can access to extend PySimpleGUI
+            self.Widget = (
+                self.TKMenu
+            )  # same the new menu so user can access to extend PySimpleGUI
             for menu_entry in self.MenuDefinition:
-                baritem = tk.Menu(menubar, tearoff=self.Tearoff, tearoffcommand=self._tearoff_menu_callback)
+                baritem = tk.Menu(
+                    menubar,
+                    tearoff=self.Tearoff,
+                    tearoffcommand=self._tearoff_menu_callback,
+                )
 
                 if self.BackgroundColor not in (COLOR_SYSTEM_DEFAULT, None):
                     baritem.config(bg=self.BackgroundColor)
@@ -171,19 +193,35 @@ class Menu(Element):
                 pos = menu_entry[0].find(MENU_SHORTCUT_CHARACTER)
                 # print(pos)
                 if pos != -1:
-                    if pos == 0 or menu_entry[0][pos - len(MENU_SHORTCUT_CHARACTER)] != '\\':
-                        menu_entry[0] = menu_entry[0][:pos] + menu_entry[0][pos + len(MENU_SHORTCUT_CHARACTER) :]
+                    if (
+                        pos == 0
+                        or menu_entry[0][pos - len(MENU_SHORTCUT_CHARACTER)] != "\\"
+                    ):
+                        menu_entry[0] = (
+                            menu_entry[0][:pos]
+                            + menu_entry[0][pos + len(MENU_SHORTCUT_CHARACTER) :]
+                        )
                 if menu_entry[0][0] == MENU_DISABLED_CHARACTER:
-                    menubar.add_cascade(label=menu_entry[0][len(MENU_DISABLED_CHARACTER) :], menu=baritem, underline=pos)
-                    menubar.entryconfig(menu_entry[0][len(MENU_DISABLED_CHARACTER) :], state='disabled')
+                    menubar.add_cascade(
+                        label=menu_entry[0][len(MENU_DISABLED_CHARACTER) :],
+                        menu=baritem,
+                        underline=pos,
+                    )
+                    menubar.entryconfig(
+                        menu_entry[0][len(MENU_DISABLED_CHARACTER) :], state="disabled"
+                    )
                 else:
-                    menubar.add_cascade(label=menu_entry[0], menu=baritem, underline=pos)
+                    menubar.add_cascade(
+                        label=menu_entry[0], menu=baritem, underline=pos
+                    )
 
                 if len(menu_entry) > 1:
                     AddMenuItem(baritem, menu_entry[1], self)
 
         if visible is False:
-            self.ParentForm.TKroot.configure(menu=[])  # this will cause the menubar to disappear
+            self.ParentForm.TKroot.configure(
+                menu=[]
+            )  # this will cause the menubar to disappear
         elif self.TKMenu is not None:
             self.ParentForm.TKroot.configure(menu=self.TKMenu)
         if visible is not None:

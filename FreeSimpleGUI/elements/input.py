@@ -16,11 +16,11 @@ class Input(Element):
 
     def __init__(
         self,
-        default_text='',
+        default_text="",
         size=(None, None),
         s=(None, None),
         disabled=False,
-        password_char='',
+        password_char="",
         justification=None,
         background_color=None,
         text_color=None,
@@ -110,10 +110,18 @@ class Input(Element):
         :type metadata:                            (Any)
         """
 
-        self.DefaultText = default_text if default_text is not None else ''
+        self.DefaultText = default_text if default_text is not None else ""
         self.PasswordCharacter = password_char
-        bg = background_color if background_color is not None else FreeSimpleGUI.DEFAULT_INPUT_ELEMENTS_COLOR
-        fg = text_color if text_color is not None else FreeSimpleGUI.DEFAULT_INPUT_TEXT_COLOR
+        bg = (
+            background_color
+            if background_color is not None
+            else FreeSimpleGUI.DEFAULT_INPUT_ELEMENTS_COLOR
+        )
+        fg = (
+            text_color
+            if text_color is not None
+            else FreeSimpleGUI.DEFAULT_INPUT_TEXT_COLOR
+        )
         self.selected_text_color = selected_text_color
         self.selected_background_color = selected_background_color
         self.Focus = focus
@@ -126,7 +134,11 @@ class Input(Element):
         self.disabled_readonly_background_color = disabled_readonly_background_color
         self.disabled_readonly_text_color = disabled_readonly_text_color
         self.ReadOnly = readonly
-        self.BorderWidth = border_width if border_width is not None else FreeSimpleGUI.DEFAULT_BORDER_WIDTH
+        self.BorderWidth = (
+            border_width
+            if border_width is not None
+            else FreeSimpleGUI.DEFAULT_BORDER_WIDTH
+        )
         self.TKEntry = self.Widget = None  # type: tk.Entry
         key = key if key is not None else k
         sz = size if size != (None, None) else s
@@ -156,7 +168,7 @@ class Input(Element):
         text_color=None,
         background_color=None,
         font=None,
-        move_cursor_to='end',
+        move_cursor_to="end",
         password_char=None,
         paste=None,
         readonly=None,
@@ -192,11 +204,13 @@ class Input(Element):
         :param readonly:         if True make element readonly (user cannot change any choices). Enables the element if either choice are made.
         :type readonly:          (bool)
         """
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Input.update - The window was closed')
+            _error_popup_with_traceback("Error in Input.update - The window was closed")
             return
 
         if background_color not in (None, COLOR_SYSTEM_DEFAULT):
@@ -208,24 +222,27 @@ class Input(Element):
 
         if disabled is True:
             if self.UseReadonlyForDisable:
-                if self.disabled_readonly_text_color not in (None, COLOR_SYSTEM_DEFAULT):
+                if self.disabled_readonly_text_color not in (
+                    None,
+                    COLOR_SYSTEM_DEFAULT,
+                ):
                     self.TKEntry.configure(fg=self.disabled_readonly_text_color)
-                self.TKEntry['state'] = 'readonly'
+                self.TKEntry["state"] = "readonly"
             else:
                 if self.TextColor not in (None, COLOR_SYSTEM_DEFAULT):
                     self.TKEntry.configure(fg=self.TextColor)
-                self.TKEntry['state'] = 'disabled'
+                self.TKEntry["state"] = "disabled"
             self.Disabled = True
         elif disabled is False:
-            self.TKEntry['state'] = 'normal'
+            self.TKEntry["state"] = "normal"
             if self.TextColor not in (None, COLOR_SYSTEM_DEFAULT):
                 self.TKEntry.configure(fg=self.TextColor)
             self.Disabled = False
 
         if readonly is True:
-            self.TKEntry['state'] = 'readonly'
+            self.TKEntry["state"] = "readonly"
         elif readonly is False:
-            self.TKEntry['state'] = 'normal'
+            self.TKEntry["state"] = "normal"
 
         if value is not None:
             if paste is not True:
@@ -236,16 +253,16 @@ class Input(Element):
             self.DefaultText = value
             if paste is True:
                 try:
-                    self.TKEntry.delete('sel.first', 'sel.last')
+                    self.TKEntry.delete("sel.first", "sel.last")
                 except:
                     pass
-                self.TKEntry.insert('insert', value)
-            if move_cursor_to == 'end':
+                self.TKEntry.insert("insert", value)
+            if move_cursor_to == "end":
                 self.TKEntry.icursor(tk.END)
             elif move_cursor_to is not None:
                 self.TKEntry.icursor(move_cursor_to)
         if select:
-            self.TKEntry.select_range(0, 'end')
+            self.TKEntry.select_range(0, "end")
         if visible is False:
             self._pack_forget_save_settings()
             # self.TKEntry.pack_forget()
@@ -277,10 +294,10 @@ class Input(Element):
                 self.Widget.config(insertbackground=ibeam_color)
             except Exception:
                 _error_popup_with_traceback(
-                    'Error setting I-Beam color in set_ibeam_color',
-                    'The element has a key:',
+                    "Error setting I-Beam color in set_ibeam_color",
+                    "The element has a key:",
                     self.Key,
-                    'The color passed in was:',
+                    "The color passed in was:",
                     ibeam_color,
                 )
 
@@ -294,7 +311,7 @@ class Input(Element):
         try:
             text = self.TKStringVar.get()
         except:
-            text = ''
+            text = ""
         return text
 
     Get = get

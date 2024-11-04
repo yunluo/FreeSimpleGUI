@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import warnings
-from tkinter import ttk
 
 import FreeSimpleGUI
 from FreeSimpleGUI import COLOR_SYSTEM_DEFAULT
@@ -34,7 +33,7 @@ class Table(Element):
         num_rows=None,
         row_height=None,
         font=None,
-        justification='right',
+        justification="right",
         text_color=None,
         background_color=None,
         alternating_row_color=None,
@@ -186,10 +185,22 @@ class Table(Element):
         self.MaxColumnWidth = max_col_width
         self.DefaultColumnWidth = def_col_width
         self.AutoSizeColumns = auto_size_columns
-        self.BackgroundColor = background_color if background_color is not None else FreeSimpleGUI.DEFAULT_BACKGROUND_COLOR
+        self.BackgroundColor = (
+            background_color
+            if background_color is not None
+            else FreeSimpleGUI.DEFAULT_BACKGROUND_COLOR
+        )
         self.TextColor = text_color
-        self.HeaderTextColor = header_text_color if header_text_color is not None else LOOK_AND_FEEL_TABLE[FreeSimpleGUI.CURRENT_LOOK_AND_FEEL]['TEXT_INPUT']
-        self.HeaderBackgroundColor = header_background_color if header_background_color is not None else LOOK_AND_FEEL_TABLE[FreeSimpleGUI.CURRENT_LOOK_AND_FEEL]['INPUT']
+        self.HeaderTextColor = (
+            header_text_color
+            if header_text_color is not None
+            else LOOK_AND_FEEL_TABLE[FreeSimpleGUI.CURRENT_LOOK_AND_FEEL]["TEXT_INPUT"]
+        )
+        self.HeaderBackgroundColor = (
+            header_background_color
+            if header_background_color is not None
+            else LOOK_AND_FEEL_TABLE[FreeSimpleGUI.CURRENT_LOOK_AND_FEEL]["INPUT"]
+        )
         self.HeaderFont = header_font
         self.Justification = justification
         self.InitialState = None
@@ -204,8 +215,10 @@ class Table(Element):
         self.SelectedRows = []
         self.ChangeSubmits = change_submits or enable_events
         self.BindReturnKey = bind_return_key
-        self.StartingRowNumber = starting_row_number  # When displaying row numbers, where to start
-        self.RowHeaderText = 'Row'
+        self.StartingRowNumber = (
+            starting_row_number  # When displaying row numbers, where to start
+        )
+        self.RowHeaderText = "Row"
         self.enable_click_events = enable_click_events
         self.right_click_selects = right_click_selects
         self.last_clicked_position = (None, None)
@@ -219,9 +232,12 @@ class Table(Element):
         else:
             try:
                 if isinstance(selected_row_colors, str):
-                    selected_row_colors = selected_row_colors.split(' on ')
+                    selected_row_colors = selected_row_colors.split(" on ")
             except Exception as e:
-                print('* Table Element Warning * you messed up with color formatting of Selected Row Color', e)
+                print(
+                    "* Table Element Warning * you messed up with color formatting of Selected Row Color",
+                    e,
+                )
         self.SelectedRowColors = selected_row_colors
 
         self.RightClickMenu = right_click_menu
@@ -254,7 +270,15 @@ class Table(Element):
         )
         return
 
-    def update(self, values=None, num_rows=None, visible=None, select_rows=None, alternating_row_color=None, row_colors=None):
+    def update(
+        self,
+        values=None,
+        num_rows=None,
+        visible=None,
+        select_rows=None,
+        alternating_row_color=None,
+        row_colors=None,
+    ):
         """
         Changes some of the settings for the Table Element. Must call `Window.Read` or `Window.Finalize` prior
 
@@ -277,24 +301,34 @@ class Table(Element):
         :param row_colors:            list of tuples of (row, background color) OR (row, foreground color, background color). Changes the colors of listed rows to the color(s) provided (note the optional foreground color)
         :type row_colors:             List[Tuple[int, str] | Tuple[Int, str, str]]
         """
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Table.update - The window was closed')
+            _error_popup_with_traceback("Error in Table.update - The window was closed")
             return
 
         if values is not None:
             for id in self.tree_ids:
                 self.TKTreeview.item(id, tags=())
-                if self.BackgroundColor is not None and self.BackgroundColor != COLOR_SYSTEM_DEFAULT:
+                if (
+                    self.BackgroundColor is not None
+                    and self.BackgroundColor != COLOR_SYSTEM_DEFAULT
+                ):
                     self.TKTreeview.tag_configure(id, background=self.BackgroundColor)
                 else:
-                    self.TKTreeview.tag_configure(id, background='#FFFFFF', foreground='#000000')
-                if self.TextColor is not None and self.TextColor != COLOR_SYSTEM_DEFAULT:
+                    self.TKTreeview.tag_configure(
+                        id, background="#FFFFFF", foreground="#000000"
+                    )
+                if (
+                    self.TextColor is not None
+                    and self.TextColor != COLOR_SYSTEM_DEFAULT
+                ):
                     self.TKTreeview.tag_configure(id, foreground=self.TextColor)
                 else:
-                    self.TKTreeview.tag_configure(id, foreground='#000000')
+                    self.TKTreeview.tag_configure(id, foreground="#000000")
 
             children = self.TKTreeview.get_children()
             for i in children:
@@ -306,11 +340,16 @@ class Table(Element):
             for i, value in enumerate(values):
                 if self.DisplayRowNumbers:
                     value = [i + self.StartingRowNumber] + value
-                id = self.TKTreeview.insert('', 'end', text=value, iid=i + 1, values=value, tag=i)
-                if self.BackgroundColor is not None and self.BackgroundColor != COLOR_SYSTEM_DEFAULT:
+                id = self.TKTreeview.insert(
+                    "", "end", text=value, iid=i + 1, values=value, tag=i
+                )
+                if (
+                    self.BackgroundColor is not None
+                    and self.BackgroundColor != COLOR_SYSTEM_DEFAULT
+                ):
                     self.TKTreeview.tag_configure(id, background=self.BackgroundColor)
                 else:
-                    self.TKTreeview.tag_configure(id, background='#FFFFFF')
+                    self.TKTreeview.tag_configure(id, background="#FFFFFF")
                 self.tree_ids.append(id)
             self.Values = values
             self.SelectedRows = []
@@ -337,7 +376,9 @@ class Table(Element):
                 if len(row_def) == 2:  # only background is specified
                     self.TKTreeview.tag_configure(row_def[0], background=row_def[1])
                 else:
-                    self.TKTreeview.tag_configure(row_def[0], background=row_def[2], foreground=row_def[1])
+                    self.TKTreeview.tag_configure(
+                        row_def[0], background=row_def[2], foreground=row_def[1]
+                    )
         if visible is not None:
             self._visible = visible
 
@@ -356,7 +397,7 @@ class Table(Element):
             if self.Key is not None:
                 self.ParentForm.LastButtonClicked = self.Key
             else:
-                self.ParentForm.LastButtonClicked = ''
+                self.ParentForm.LastButtonClicked = ""
             self.ParentForm.FormRemainedOpen = True
             _exit_mainloop(self.ParentForm)
 
@@ -374,7 +415,7 @@ class Table(Element):
             if self.Key is not None:
                 self.ParentForm.LastButtonClicked = self.Key
             else:
-                self.ParentForm.LastButtonClicked = ''
+                self.ParentForm.LastButtonClicked = ""
             self.ParentForm.FormRemainedOpen = True
             _exit_mainloop(self.ParentForm)
 
@@ -386,32 +427,45 @@ class Table(Element):
         :param event: event information from tkinter
         :type event:  (unknown)
         """
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return
         # popup(obj_to_string_single_obj(event))
         try:
-            region = self.Widget.identify('region', event.x, event.y)
-            if region == 'heading':
+            region = self.Widget.identify("region", event.x, event.y)
+            if region == "heading":
                 row = -1
-            elif region == 'cell':
+            elif region == "cell":
                 row = int(self.Widget.identify_row(event.y)) - 1
-            elif region == 'separator':
+            elif region == "separator":
                 row = None
             else:
                 row = None
             col_identified = self.Widget.identify_column(event.x)
             if col_identified:  # Sometimes tkinter returns a value of '' which would cause an error if cast to an int
-                column = int(self.Widget.identify_column(event.x)[1:]) - 1 - int(self.DisplayRowNumbers is True)
+                column = (
+                    int(self.Widget.identify_column(event.x)[1:])
+                    - 1
+                    - int(self.DisplayRowNumbers is True)
+                )
             else:
                 column = None
         except Exception as e:
-            warnings.warn('Error getting table click data for table with key= {}\nError: {}'.format(self.Key, e), UserWarning)
+            warnings.warn(
+                "Error getting table click data for table with key= {}\nError: {}".format(
+                    self.Key, e
+                ),
+                UserWarning,
+            )
             if not FreeSimpleGUI.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
-                    'Unable to complete operation getting the clicked event for table with key {}'.format(self.Key),
+                    "Unable to complete operation getting the clicked event for table with key {}".format(
+                        self.Key
+                    ),
                     _create_error_message(),
                     e,
-                    'Event data:',
+                    "Event data:",
                     obj_to_string_single_obj(event),
                 )
             row = column = None
@@ -423,7 +477,9 @@ class Table(Element):
         # self.TKTreeview.()
         selections = self.TKTreeview.selection()
         if self.right_click_selects and len(selections) <= 1:
-            if (event.num == 3 and not running_mac()) or (event.num == 2 and running_mac()):
+            if (event.num == 3 and not running_mac()) or (
+                event.num == 2 and running_mac()
+            ):
                 if row != -1 and row is not None:
                     selections = [row + 1]
                     self.TKTreeview.selection_set(selections)
@@ -432,9 +488,13 @@ class Table(Element):
         # print('The new selected rows = ', self.SelectedRows, 'selections =', selections)
         if self.enable_click_events is True:
             if self.Key is not None:
-                self.ParentForm.LastButtonClicked = (self.Key, TABLE_CLICKED_INDICATOR, (row, column))
+                self.ParentForm.LastButtonClicked = (
+                    self.Key,
+                    TABLE_CLICKED_INDICATOR,
+                    (row, column),
+                )
             else:
-                self.ParentForm.LastButtonClicked = ''
+                self.ParentForm.LastButtonClicked = ""
             self.ParentForm.FormRemainedOpen = True
             _exit_mainloop(self.ParentForm)
 

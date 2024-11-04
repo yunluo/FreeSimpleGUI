@@ -106,15 +106,29 @@ class Checkbox(Element):
         if checkbox_color is None:
             try:  # something in here will fail if a color is not specified in Hex
                 text_hsl = _hex_to_hsl(self.TextColor)
-                background_hsl = _hex_to_hsl(background_color if background_color else theme_background_color())
+                background_hsl = _hex_to_hsl(
+                    background_color if background_color else theme_background_color()
+                )
                 l_delta = abs(text_hsl[2] - background_hsl[2]) / 10
-                if text_hsl[2] > background_hsl[2]:  # if the text is "lighter" than the background then make background darker
-                    bg_rbg = _hsl_to_rgb(background_hsl[0], background_hsl[1], background_hsl[2] - l_delta)
+                if (
+                    text_hsl[2] > background_hsl[2]
+                ):  # if the text is "lighter" than the background then make background darker
+                    bg_rbg = _hsl_to_rgb(
+                        background_hsl[0],
+                        background_hsl[1],
+                        background_hsl[2] - l_delta,
+                    )
                 else:
-                    bg_rbg = _hsl_to_rgb(background_hsl[0], background_hsl[1], background_hsl[2] + l_delta)
+                    bg_rbg = _hsl_to_rgb(
+                        background_hsl[0],
+                        background_hsl[1],
+                        background_hsl[2] + l_delta,
+                    )
                 self.CheckboxBackgroundColor = rgb(*bg_rbg)
             except:
-                self.CheckboxBackgroundColor = background_color if background_color else theme_background_color()
+                self.CheckboxBackgroundColor = (
+                    background_color if background_color else theme_background_color()
+                )
         else:
             self.CheckboxBackgroundColor = checkbox_color
         self.ChangeSubmits = change_submits or enable_events
@@ -182,11 +196,15 @@ class Checkbox(Element):
         :type visible:           (bool)
         """
 
-        if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
+        if (
+            not self._widget_was_created()
+        ):  # if widget hasn't been created yet, then don't allow
             return
 
         if self._this_elements_window_closed():
-            _error_popup_with_traceback('Error in Checkbox.update - The window was closed')
+            _error_popup_with_traceback(
+                "Error in Checkbox.update - The window was closed"
+            )
             return
 
         if value is not None:
@@ -195,11 +213,11 @@ class Checkbox(Element):
                 self.TKIntVar.set(value)
                 self.InitialState = value
             except:
-                print('Checkbox update failed')
+                print("Checkbox update failed")
         if disabled is True:
-            self.TKCheckbutton.configure(state='disabled')
+            self.TKCheckbutton.configure(state="disabled")
         elif disabled is False:
-            self.TKCheckbutton.configure(state='normal')
+            self.TKCheckbutton.configure(state="normal")
         self.Disabled = disabled if disabled is not None else self.Disabled
 
         if text is not None:
@@ -214,19 +232,43 @@ class Checkbox(Element):
         # Color the checkbox itself
         if checkbox_color not in (None, COLOR_SYSTEM_DEFAULT):
             self.CheckboxBackgroundColor = checkbox_color
-            self.TKCheckbutton.configure(selectcolor=self.CheckboxBackgroundColor)  # The background of the checkbox
+            self.TKCheckbutton.configure(
+                selectcolor=self.CheckboxBackgroundColor
+            )  # The background of the checkbox
         elif text_color or background_color:
-            if self.CheckboxBackgroundColor is not None and self.TextColor is not None and self.BackgroundColor is not None and self.TextColor.startswith('#') and self.BackgroundColor.startswith('#'):
+            if (
+                self.CheckboxBackgroundColor is not None
+                and self.TextColor is not None
+                and self.BackgroundColor is not None
+                and self.TextColor.startswith("#")
+                and self.BackgroundColor.startswith("#")
+            ):
                 # ---- compute color of checkbox background ---
                 text_hsl = _hex_to_hsl(self.TextColor)
-                background_hsl = _hex_to_hsl(self.BackgroundColor if self.BackgroundColor else theme_background_color())
+                background_hsl = _hex_to_hsl(
+                    self.BackgroundColor
+                    if self.BackgroundColor
+                    else theme_background_color()
+                )
                 l_delta = abs(text_hsl[2] - background_hsl[2]) / 10
-                if text_hsl[2] > background_hsl[2]:  # if the text is "lighter" than the background then make background darker
-                    bg_rbg = _hsl_to_rgb(background_hsl[0], background_hsl[1], background_hsl[2] - l_delta)
+                if (
+                    text_hsl[2] > background_hsl[2]
+                ):  # if the text is "lighter" than the background then make background darker
+                    bg_rbg = _hsl_to_rgb(
+                        background_hsl[0],
+                        background_hsl[1],
+                        background_hsl[2] - l_delta,
+                    )
                 else:
-                    bg_rbg = _hsl_to_rgb(background_hsl[0], background_hsl[1], background_hsl[2] + l_delta)
+                    bg_rbg = _hsl_to_rgb(
+                        background_hsl[0],
+                        background_hsl[1],
+                        background_hsl[2] + l_delta,
+                    )
                 self.CheckboxBackgroundColor = rgb(*bg_rbg)
-                self.TKCheckbutton.configure(selectcolor=self.CheckboxBackgroundColor)  # The background of the checkbox
+                self.TKCheckbutton.configure(
+                    selectcolor=self.CheckboxBackgroundColor
+                )  # The background of the checkbox
 
         if visible is False:
             self._pack_forget_save_settings()
